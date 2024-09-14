@@ -12,10 +12,10 @@ on:
           - 23.05.3
           - 23.05.2
           - 23.05.1
-      target_platform:
-        description: 'Target Platform (visit https://example.com/platforms for valid options)'
+      parameters_json:
+        description: 'Parameters JSON (visit https://example.com/platforms for valid options)'
         required: true
-        default: 'PlatformExample'
+        default: '{"model_name": "example_model", "target_platform": "x86", "architecture": "x86_64"}'
         type: string
 
 jobs:
@@ -34,11 +34,11 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt # 假设你有一个requirements.txt文件列出依赖项
+          pip install requests # 用于下载文件
 
       - name: Run Python Script
         run: |
           python app.py
         env:
           FIRMWARE_VERSION: ${{ github.event.inputs.firmware_version }}
-          TARGET_PLATFORM: ${{ github.event.inputs.target_platform }}
+          PARAMETERS_JSON: ${{ github.event.inputs.parameters_json }}
