@@ -1,10 +1,6 @@
 name: CI
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
     inputs:
       firmware_version:
@@ -19,24 +15,30 @@ on:
       target_platform:
         description: 'Target Platform (visit https://example.com/platforms for valid options)'
         required: true
-        default: 'https://example.com/platforms'
+        default: 'PlatformExample'
         type: string
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      FIRMWARE_VERSION: ${{ github.event.inputs.firmware_version }}
-      TARGET_PLATFORM: ${{ github.event.inputs.target_platform }}
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8 # 或者你所需的Python版本
 
-      - name: Run a multi-line script
+      - name: Install Dependencies
         run: |
-          echo Add other actions to build
-          echo test, and deploy your project.
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt # 假设你有一个requirements.txt文件列出依赖项
+
+      - name: Run Python Script
+        run: |
+          python app.py
+        env:
+          FIRMWARE_VERSION: ${{ github.event.inputs.firmware_version }}
+          TARGET_PLATFORM: ${{ github.event.inputs.target_platform }}
