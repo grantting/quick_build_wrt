@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      firmware_version:
+        description: 'Firmware Version'
+        required: true
+        default: '23.05.3'
+        type: choice
+        options:
+          - 23.05.3
+          - 23.05.2
+          - 23.05.1
+      target_platform:
+        description: 'Target Platform (visit https://example.com/platforms for valid options)'
+        required: true
+        default: 'https://example.com/platforms'
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      FIRMWARE_VERSION: ${{ github.event.inputs.firmware_version }}
+      TARGET_PLATFORM: ${{ github.event.inputs.target_platform }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build
+          echo test, and deploy your project.
