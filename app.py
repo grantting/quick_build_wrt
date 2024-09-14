@@ -5,8 +5,16 @@ from io import BytesIO
 
 def download_and_extract(firmware_version, target_platform):
     # 构建下载URL
-    url_template = "https://downloads.immortalwrt.org/releases/{firmware_version}/targets/{target_platform}/immortalwrt-imagebuilder-{firmware_version}-{target_platform//\//-}.Linux-x86_64.tar.xz"
-    url = url_template.format(firmware_version=firmware_version, target_platform=target_platform.replace("/", "-"))
+    target_platform_replaced = target_platform.replace("/", "-")
+    url_template = (
+        "https://downloads.immortalwrt.org/releases/{firmware_version}/targets/{target_platform}/"
+        "immortalwrt-imagebuilder-{firmware_version}-{target_platform_replaced}.Linux-x86_64.tar.xz"
+    )
+    url = url_template.format(
+        firmware_version=firmware_version,
+        target_platform=target_platform,
+        target_platform_replaced=target_platform_replaced
+    )
     
     print(f"Firmware Version: {firmware_version}")
     print(f"Target Platform: {target_platform}")
