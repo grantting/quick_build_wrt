@@ -21,6 +21,6 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.3.0
       with:
-        token: ${{ secrets.ACCESS_TOKEN }}
+        token: ${{secrets.GH_PAT}}
         branch: gh-pages # 更改为你的GitHub Pages分支
         folder: web # 部署的文件夹
