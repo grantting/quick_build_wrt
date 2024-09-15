@@ -15,12 +15,31 @@ on:
       parameters_json:
         description: 'Parameters JSON (visit https://example.com/platforms for valid options)'
         required: true
-        default: '{"model_name": "example_model", "target_platform": "x86", "architecture": "x86_64"}'
+        default: '{"model_name": "example_model", "target_platform": "x86"}'
         type: string
+      upload_all:
+        description: 'Upload All Artifacts'
+        required: false
+        default: true
+        type: boolean
+      release:
+        description: 'Create Release'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      VENDOR: YourVendorName
+      VERSION: ${{ github.event.inputs.firmware_version }}
+      DATE: $(date +%Y-%m-%d)
+      DATETIME: $(date +%Y-%m-%d_%H-%M-%S) # 添加 DATETIME 环境变量
+      MODEL_NAME: ''
+      TARGET_PLATFORM: ''
+      URL_PLATFORM: ''
 
     steps:
       - name: Checkout Repository
@@ -36,9 +55,59 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests # 用于下载文件
 
-      - name: Run Python Script
+      # 设置环境变量
+      - name: Set Environment Variables
+        id: set_env_vars
         run: |
-          python app.py
+          # 安装 jq
+          sudo apt-get update && sudo apt-get install -y jq
+          # 解析 JSON 字符串并设置环境变量
+          MODEL_NAME=$(echo "${{ github.event.inputs.parameters_json }}" | jq -r '.model_name')
+          TARGET_PLATFORM=$(echo "${{ github.event.inputs.parameters_json }}" | jq -r '.target_platform')
+          echo "MODEL_NAME=$MODEL_NAME" >> $GITHUB_ENV
+          echo "TARGET_PLATFORM=$TARGET_PLATFORM" >> $GITHUB_ENV
+          # 设置其他环境变量
+          echo "FIRMWARE_VERSION=${{ github.event.inputs.firmware_version }}" >> $GITHUB_ENV
+          echo "PARAMETERS_JSON=${{ github.event.inputs.parameters_json }}" >> $GITHUB_ENV
+          echo "URL_PLATFORM=$TARGET_PLATFORM" >> $GITHUB_ENV
+
+      # 运行下载脚本
+      - name: Run Download Python Script
+        run: |
+          python download.py
         env:
-          FIRMWARE_VERSION: ${{ github.event.inputs.firmware_version }}
-          PARAMETERS_JSON: ${{ github.event.inputs.parameters_json }}
+          FIRMWARE_VERSION: ${{ env.FIRMWARE_VERSION }}
+          PARAMETERS_JSON: ${{ env.PARAMETERS_JSON }}
+
+      # 运行构建脚本
+      - name: Run Build Python Script
+        run: |
+          python build.py
+        env:
+          FIRMWARE_VERSION: ${{ env.FIRMWARE_VERSION }}
+          PARAMETERS_JSON: ${{ env.PARAMETERS_JSON }}
+
+      - name: Upload VDI Image for Development Purposes
+        if: github.ref == 'refs/heads/dev'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-vdi-image-${{ env.DATETIME }}
+          path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.TARGET_PLATFORM }}.Linux-x86_64/bin/targets/${{env.URL_PLATFORM}}/*.vdi
+
+      - name: Upload All Artifacts
+        if: github.event.inputs.upload_all == 'true'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL_NAME }}-images-${{ env.DATETIME }}
+          path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.TARGET_PLATFORM }}.Linux-x86_64/bin/targets/${{env.URL_PLATFORM}}/*
+
+      - name: Upload Firmware Release
+        if: github.event.inputs.release == 'true'
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file_glob: true
+          file: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.TARGET_PLATFORM }}.Linux-x86_64/bin/targets/${{env.URL_PLATFORM}}/*
+          asset_name: ${{ github.event.repository.name }}-${{ github.sha }}
+          tag: release-${{ env.DATE }}
+          overwrite: true
