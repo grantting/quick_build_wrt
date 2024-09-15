@@ -1,0 +1,82 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tdesign-vue-next/dist/tdesign.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tdesign-vue-next/dist/tdesign.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
+    <script src="overview.js"></script>
+</head>
+
+<div id="app">
+    <t-card>
+        <t-space direction="vertical" style="width: 100%;">
+            <p>选择机型并复制参数到工作流</p>
+            <t-auto-complete v-model="name" :options="overviewList" highlight-keyword filterable @select="handleSelect">
+            </t-auto-complete>
+
+            <t-descriptions layout="vertical" table-layout="auto">
+                <t-descriptions-item label="机器型号">{{selectedItem.id}}</t-descriptions-item>
+                <t-descriptions-item label="目标平台">{{selectedItem.target}}</t-descriptions-item>
+            </t-descriptions>
+
+            <div style="text-align: right;">
+                <t-button shape="circle" variant="outline" @click="copyParameter">
+                    <template #icon>
+                        <t-icon name="copy"></t-icon>
+                    </template>
+                </t-button>
+            </div>
+
+        </t-space>
+    </t-card>
+</div>
+
+<script type="module">
+    const { createApp, ref, onBeforeMount, onMounted } = Vue;
+    const app = createApp({
+        setup() {
+            const name = ref('')
+            const overviewList = ref([])
+
+            const getOverview = (list) => list.map(item => item.id);
+
+            const selectedItem = ref({ id: '', target: '' });
+            const handleSelect = (value) => {
+                const foundOption = overview.find(opt => opt.id === value);
+
+                if (foundOption) {
+                    selectedItem.value = { ...selectedItem.value, id: value, target: foundOption.target };
+                } else {
+                    console.warn('未找到对应选项:', value);
+                }
+            };
+
+            // 复制参数
+            const copyParameter = async () => {
+                const textToCopy = `{"model_name": "${selectedItem.value.id}", "target_platform": "${selectedItem.value.target}"}`;
+                try {
+                    await navigator.clipboard.writeText(textToCopy);
+                    alert('已成功复制到剪贴板');
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+            };
+
+            onBeforeMount(() => {
+                //console.log('2.组件挂载页面之前执行----onBeforeMount')
+            })
+            onMounted(() => {
+                //console.log('3.-组件挂载到页面之后执行-------onMounted')
+                overviewList.value = getOverview(overview)
+            })
+            return {
+                name, overviewList, getOverview, overview, selectedItem,
+                handleSelect, copyParameter
+            }
+        }
+    });
+    app.use(TDesign);
+    app.mount('#app');
+</script>
+
+<style>
+</style>

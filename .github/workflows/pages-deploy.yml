@@ -1,0 +1,31 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # 假设你的默认分支是 main，如果不是，请修改为你的默认分支名
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # 根据你的项目需求选择合适的 Node.js 版本
+
+      # 如果你的 web 文件夹中的内容需要构建，可以在这里添加构建命令
+      #- name: Build the project
+      #  run: npm ci && npm run build --if-present
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./web # 这里指定你的 web 文件夹路径
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          publish_branch: gh-pages # 你可以选择要发布的分支，默认是 gh-pages

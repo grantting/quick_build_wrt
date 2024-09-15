@@ -74,7 +74,7 @@ jobs:
       # 运行下载脚本
       - name: Run Download Python Script
         run: |
-          python download.py
+          python build/download.py
         env:
           FIRMWARE_VERSION: ${{ env.FIRMWARE_VERSION }}
           PARAMETERS_JSON: ${{ env.PARAMETERS_JSON }}
@@ -82,7 +82,7 @@ jobs:
       # 运行构建脚本
       - name: Run Build Python Script
         run: |
-          python build.py
+          python build/build.py
         env:
           FIRMWARE_VERSION: ${{ env.FIRMWARE_VERSION }}
           PARAMETERS_JSON: ${{ env.PARAMETERS_JSON }}
