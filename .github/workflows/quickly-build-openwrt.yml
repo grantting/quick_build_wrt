@@ -59,7 +59,7 @@ jobs:
       - name: Set Environment Variables
         id: set_env_vars
         run: |
-          echo "${{ github.event.inputs.parameters_json }}"
+          echo "Received parameters_json: ${{ github.event.inputs.parameters_json }}"
           MODEL_NAME=$(echo "${{ github.event.inputs.parameters_json }}" | jq -r '.model_name')
           TARGET_PLATFORM=$(echo "${{ github.event.inputs.parameters_json }}" | jq -r '.target_platform')
           echo "MODEL_NAME=$MODEL_NAME" >> $GITHUB_ENV
