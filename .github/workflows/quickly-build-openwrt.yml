@@ -59,14 +59,11 @@ jobs:
       - name: Set Environment Variables
         id: set_env_vars
         run: |
-          # 安装 jq
           sudo apt-get update && sudo apt-get install -y jq
-          # 解析 JSON 字符串并设置环境变量
           MODEL_NAME=$(echo "${{ github.event.inputs.parameters_json }}" | jq -r '.model_name')
           TARGET_PLATFORM=$(echo "${{ github.event.inputs.parameters_json }}" | jq -r '.target_platform')
           echo "MODEL_NAME=$MODEL_NAME" >> $GITHUB_ENV
           echo "TARGET_PLATFORM=$TARGET_PLATFORM" >> $GITHUB_ENV
-          # 设置其他环境变量
           echo "FIRMWARE_VERSION=${{ github.event.inputs.firmware_version }}" >> $GITHUB_ENV
           echo "PARAMETERS_JSON=${{ github.event.inputs.parameters_json }}" >> $GITHUB_ENV
           echo "URL_PLATFORM=$TARGET_PLATFORM" >> $GITHUB_ENV
