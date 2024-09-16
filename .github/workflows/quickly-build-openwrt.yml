@@ -58,15 +58,11 @@ jobs:
       # 设置环境变量
       - name: Set Environment Variables
         id: set_env_vars
+        env:
+          INPUT_PARAMETERS_JSON: ${{ github.event.inputs.parameters_json }}
+          INPUT_FIRMWARE_VERSION: ${{ github.event.inputs.firmware_version }}
         run: |
-          echo "Received parameters_json: ${{ github.event.inputs.parameters_json }}"
-          MODEL_NAME=$(echo "${{ github.event.inputs.parameters_json }}" | jq -r '.model_name')
-          TARGET_PLATFORM=$(echo "${{ github.event.inputs.parameters_json }}" | jq -r '.target_platform')
-          echo "MODEL_NAME=$MODEL_NAME" >> $GITHUB_ENV
-          echo "TARGET_PLATFORM=$TARGET_PLATFORM" >> $GITHUB_ENV
-          echo "FIRMWARE_VERSION=${{ github.event.inputs.firmware_version }}" >> $GITHUB_ENV
-          echo "PARAMETERS_JSON=${{ github.event.inputs.parameters_json }}" >> $GITHUB_ENV
-          echo "URL_PLATFORM=$TARGET_PLATFORM" >> $GITHUB_ENV
+          python set_env_vars.py
 
       # 运行下载脚本
       - name: Run Download Python Script
