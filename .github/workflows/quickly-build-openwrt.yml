@@ -62,7 +62,7 @@ jobs:
           INPUT_PARAMETERS_JSON: ${{ github.event.inputs.parameters_json }}
           INPUT_FIRMWARE_VERSION: ${{ github.event.inputs.firmware_version }}
         run: |
-          python set_env_vars.py
+          python build/set_env_vars.py
 
       # 运行下载脚本
       - name: Run Download Python Script
