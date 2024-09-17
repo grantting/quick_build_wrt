@@ -25,7 +25,6 @@ def set_environment_variables(parameters_json, firmware_version):
         f'echo "MODEL_NAME={model_name}" >> $GITHUB_ENV',
         f'echo "TARGET_PLATFORM={target_platform}" >> $GITHUB_ENV',
         f'echo "FIRMWARE_VERSION={firmware_version}" >> $GITHUB_ENV',
-        f'echo "PARAMETERS_JSON={parameters_json}" >> $GITHUB_ENV',
         f'echo "URL_PLATFORM={target_platform}" >> $GITHUB_ENV'
     ]
 
