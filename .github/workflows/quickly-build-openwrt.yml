@@ -96,11 +96,13 @@ jobs:
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.TARGET_PLATFORM }}.Linux-x86_64/bin/targets/${{env.URL_PLATFORM}}/*.vdi
 
       - name: Upload All Artifacts
-        if: github.event.inputs.upload_all == 'true'
+        if: ${{ github.event.inputs.upload_all == 'true' }}
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL_NAME }}-images-${{ env.DATETIME }}
-          path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.TARGET_PLATFORM }}.Linux-x86_64/bin/targets/${{env.URL_PLATFORM}}/*
+          name: firmware-artifacts
+          path: |
+            immortalwrt-imagebuilder-*/bin/targets/*/-*-squashfs-sysupgrade.bin
+            immortalwrt-imagebuilder-*/bin/targets/*/-*-squashfs-factory.bin
 
       - name: Upload Firmware Release
         if: github.event.inputs.release == 'true'

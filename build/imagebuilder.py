@@ -1,0 +1,76 @@
+import os
+import subprocess
+import sys
+import urllib.parse
+import requests
+from tqdm import tqdm
+import tarfile
+
+def build_image_download_url(firmware_version, target):
+    # 将 target 中的 '/' 替换为 '-'
+    target_modified = target.replace('/', '-')
+    url = f"https://downloads.immortalwrt.org/releases/{firmware_version}/targets/{target}/immortalwrt-imagebuilder-{firmware_version}-{target_modified}.Linux-x86_64.tar.xz"
+    return url
+
+def download_file_with_progress(url):
+    # 获取文件大小
+    response_head = requests.head(url)
+    total_size_in_bytes= int(response_head.headers.get('content-length', 0))
+    block_size = 1024  # 1 Kibibyte
+
+    # 开始下载文件
+    response = requests.get(url, stream=True)
+    filename = url.split('/')[-1]
+
+    # 使用 tqdm 创建进度条
+    progress = tqdm(total=total_size_in_bytes, unit='iB', unit_scale=True)
+    with open(filename, 'wb') as file:
+        for data in response.iter_content(block_size):
+            progress.update(len(data))
+            file.write(data)
+    progress.close()
+
+    if total_size_in_bytes != 0 and progress.n != total_size_in_bytes:
+        print("ERROR, download incomplete.")
+    else:
+        print(f"文件已成功下载到 {filename}")
+    return filename
+
+def extract_with_progress(tar_path):
+    with tarfile.open(tar_path, "r:xz") as tar:
+        members = tar.getmembers()
+        total_members = len(members)
+        progress = tqdm(total=total_members, unit='files', desc='Extracting')
+        for member in members:
+            tar.extract(member)
+            progress.update(1)
+        progress.close()
+
+def main():
+    if len(sys.argv) != 3:
+        print("Usage: python imagebuilder.py <id> <target>")
+        sys.exit(1)
+    
+    id = sys.argv[1]
+    target = sys.argv[2]
+    
+    print(f"接收到的参数：ID={id}, Target={target}")
+
+    # 构建 URL
+    firmware_version = '23.05.3'
+    url = build_image_download_url(firmware_version, target)
+
+    # 打印 URL 以便验证
+    print(f"构建的下载 URL 为: {url}")
+
+    # 下载文件
+    filename = download_file_with_progress(url)
+
+    # 解压文件并显示进度
+    extract_with_progress(filename)
+
+    # 解压完成后运行building_image.py并传递id
+    subprocess.run(["python", "build/building_image.py", id])
+
+if __name__ == "__main__":
+    main()
