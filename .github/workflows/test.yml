@@ -26,17 +26,8 @@ jobs:
     - name: Run tests
       run: |
         python build/model_selection.py
+        echo "::set-output name=script_output::Script ran successfully"
 
-
-  test:
-    needs: build # 指定此 job 需要等待 'build' job 完成后才能开始
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Test Project
-        run: |
-          # 这里写测试项目的命令
-          echo "Testing the project..."
+    - name: Setup Debug Session
+      if: ${{ always() && steps.run_script.outcome != 'success' }}
+      uses: csexton/debugger-action@master
