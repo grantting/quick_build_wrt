@@ -40,8 +40,11 @@ jobs:
       FIRMWARE_VERSION: ${{ github.event.inputs.firmware_version }}
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      # 在 $GITHUB_WORKSPACE 下签出您的存储库，以便您的作业可以访问它
+      - name: 查看
+        uses: actions/checkout@v3
+        with: 
+          path: origin
 
       - name: Initialization Environment
         run: |
