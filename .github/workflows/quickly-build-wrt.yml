@@ -65,7 +65,7 @@ jobs:
       - name: 切换工作目录
         run: |
           cd ${{ env.VENDOR }}-imagebuilder-*/
-          cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/$VENDOR-imagebuilder-*/
+          cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/ ${{ env.VENDOR }}-imagebuilder-*/
           python build/building_image.py "${{ github.event.inputs.model_parameter }}"
             
       - name: Upload All Artifacts
