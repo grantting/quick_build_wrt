@@ -1,4 +1,4 @@
-name: CI
+name: CI v2
 
 on:
   workflow_dispatch:
@@ -59,7 +59,7 @@ jobs:
       
       - name: image download
         run: |
-            python build/imagebuilder.py --model "${{ github.event.inputs.model_parameter }}"
+            python build/imagebuilder.py "${{ github.event.inputs.model_parameter }}"
             
       - name: Upload All Artifacts
         if: ${{ github.event.inputs.upload_all == 'true' }}
