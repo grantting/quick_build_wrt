@@ -15,7 +15,7 @@ def build_image_download_url(firmware_version, target):
 def download_file_with_progress(url):
     # 获取文件大小
     response_head = requests.head(url)
-    total_size_in_bytes= int(response_head.headers.get('content-length', 0))
+    total_size_in_bytes = int(response_head.headers.get('content-length', 0))
     block_size = 1024  # 1 Kibibyte
 
     # 开始下载文件
@@ -46,13 +46,24 @@ def extract_with_progress(tar_path):
             progress.update(1)
         progress.close()
 
+def parse_input(input_string):
+    parts = input_string.split(',')
+    if len(parts) != 2:
+        raise ValueError("输入格式错误，应为 ID,Target")
+    return parts[0].strip(), parts[1].strip()
+
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python imagebuilder.py <id> <target>")
+    if len(sys.argv) != 2:
+        print("Usage: python imagebuilder.py 'ID,Target'")
         sys.exit(1)
     
-    id = sys.argv[1]
-    target = sys.argv[2]
+    input_string = sys.argv[1]
+    
+    try:
+        id, target = parse_input(input_string)
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
     
     print(f"接收到的参数：ID={id}, Target={target}")
 
