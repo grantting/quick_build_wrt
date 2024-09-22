@@ -61,7 +61,7 @@ jobs:
         run: |
             python build/imagebuilder.py "${{ github.event.inputs.model_parameter }}"
         env:
-          FIRMWARE_VERSION: ${{ env.FIRMWARE_VERSION }}
+          FIRMWARE_VERSION: ${{ github.event.inputs.firmware_version }}
 
       - name: 切换工作目录
         run: |
