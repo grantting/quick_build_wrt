@@ -60,6 +60,8 @@ jobs:
       - name: 下载解压
         run: |
             python build/imagebuilder.py "${{ github.event.inputs.model_parameter }}"
+        env:
+          FIRMWARE_VERSION: ${{ env.FIRMWARE_VERSION }}
 
       - name: 切换工作目录
         run: |
