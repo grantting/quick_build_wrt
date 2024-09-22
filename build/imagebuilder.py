@@ -68,7 +68,8 @@ def main():
     print(f"接收到的参数：ID={id}, Target={target}")
 
     # 构建 URL
-    firmware_version = '23.05.3'
+    # firmware_version = '23.05.3'
+    firmware_version = os.getenv('FIRMWARE_VERSION', 'Unknown')
     url = build_image_download_url(firmware_version, target)
 
     # 打印 URL 以便验证
@@ -81,7 +82,7 @@ def main():
     extract_with_progress(filename)
 
     # 解压完成后运行building_image.py并传递id
-    subprocess.run(["python", "build/building_image.py", id])
+    # subprocess.run(["python", "build/building_image.py", id])
 
 if __name__ == "__main__":
     main()

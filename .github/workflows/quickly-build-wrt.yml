@@ -57,9 +57,16 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r build/requirements.txt # 如果有依赖文件，则安装依赖
       
-      - name: image download
+      - name: 下载解压
         run: |
             python build/imagebuilder.py "${{ github.event.inputs.model_parameter }}"
+
+      - name: 切换工作目录
+        run: |
+          cd openwrt-imagebuilder-*/
+          python build/building_image.py "${{ github.event.inputs.model_parameter }}"
+
+      
             
       - name: Upload All Artifacts
         if: ${{ github.event.inputs.upload_all == 'true' }}

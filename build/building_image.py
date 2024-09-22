@@ -1,5 +1,6 @@
 # building_image.py
 
+import subprocess
 import sys
 import os
 
@@ -28,13 +29,9 @@ if __name__ == "__main__":
 
     # 构建并打印命令
     command = build_command(profile_id, packages, files)
-    
-    # 切换到immortalwrt-imagebuilder-*目录
-    image_builder_dir = "immortalwrt-imagebuilder-*"
-    if os.path.isdir(image_builder_dir):
-        os.chdir(image_builder_dir)
-    else:
-        print(f"Directory not found: {image_builder_dir}")
-        sys.exit(1)
-    
+
+      
     print(command)
+
+    # 执行构建命令
+    subprocess.run(command, shell=True, check=True)
