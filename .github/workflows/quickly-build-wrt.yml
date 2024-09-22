@@ -66,7 +66,7 @@ jobs:
       - name: 切换工作目录
         run: |
           cd ${{ env.VENDOR }}-imagebuilder-*/
-          python build/building_image.py "${{ github.event.inputs.model_parameter }}"
+          python ../build/building_image.py "${{ github.event.inputs.model_parameter }}"
 
       
             
