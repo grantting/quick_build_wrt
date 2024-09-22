@@ -64,7 +64,7 @@ jobs:
 
       - name: 切换工作目录
         run: |
-          cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/ ${{ env.VENDOR }}-imagebuilder-*/
+          cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/${{ env.VENDOR }}-imagebuilder-*/
           cd ${{ env.VENDOR }}-imagebuilder-*/
           python build/building_image.py "${{ github.event.inputs.model_parameter }}"
             
