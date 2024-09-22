@@ -59,7 +59,7 @@ jobs:
       - name: Install dependencies
         run: |
             python -m pip install --upgrade pip
-            pip install requests beautifulsoup4 tqdm
+            pip install -r  $GITHUB_WORKSPACE/origin/build/requirements.txt # 如果有依赖文件，则安装依赖
       
       - name: 下载解压
         run: |
