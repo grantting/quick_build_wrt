@@ -63,7 +63,7 @@ jobs:
       
       - name: 下载解压
         run: |
-            python build/imagebuilder.py "${{ github.event.inputs.model_parameter }}"
+            python  $GITHUB_WORKSPACE/origin/build/imagebuilder.py "${{ github.event.inputs.model_parameter }}"
 
       - name: 切换工作目录
         run: |
