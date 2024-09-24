@@ -29,6 +29,9 @@ try:
         with open(file_path, 'w', encoding='utf-8') as file:
             file.writelines(new_content)
         print("文件已成功更新。")
+        print("新的文件内容如下：")
+        with open(file_path, 'r', encoding='utf-8') as updated_file:
+            print(updated_file.read())
     else:
         print("没有找到需要替换的行。")
 
