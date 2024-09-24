@@ -10,32 +10,6 @@ def find_repositories_conf():
             return os.path.join(root, 'repositories.conf')
     return None
 
-def update_repositories_conf(file_path):
-    # 更新 repositories.conf 文件中的 URL
-    lines = []
-    updated = False
-    
-    with open(file_path, 'r') as file:
-        for line in file:
-            if line.startswith('src/gz immortalwrt_packages'):
-                parts = line.split()
-                if len(parts) >= 3:
-                    url = parts[2]
-                    new_url = url.replace('https://downloads.immortalwrt.org/releases/23.05.3/packages/', 'https://op.dllkids.xyz/packages/')
-                    new_url = new_url.rstrip('/packages')
-                    
-                    if new_url != url:
-                        parts[2] = new_url
-                        updated = True
-                line = ' '.join(parts) + '\n'
-            lines.append(line)
-    
-    if updated:
-        with open(file_path, 'w') as file:
-            file.writelines(lines)
-    
-    return updated
-
 def read_packages_from_file(filename):
     # 从文件中读取插件列表
     with open(filename, 'r') as file:
@@ -59,13 +33,6 @@ if __name__ == "__main__":
     
     files = "files"
     
-    # 查找并更新 repositories.conf 文件
-    repositories_conf_path = find_repositories_conf()
-    if repositories_conf_path and update_repositories_conf(repositories_conf_path):
-        print(f"Updated URL in {repositories_conf_path}")
-    else:
-        print("Did not find repositories.conf or no changes made.")
-
     # 读取插件列表
     filename = 'external-package.txt'
     packages = read_packages_from_file(filename)
