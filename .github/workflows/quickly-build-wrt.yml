@@ -73,12 +73,12 @@ jobs:
           # python build/update_repositories.py
           python build/building_image.py "${{ github.event.inputs.model_parameter }}"
             
-      - name: Upload All Artifacts
-        if: ${{ github.event.inputs.upload_all == 'true' }}
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: firmware-artifacts
           path: |
-            immortalwrt-imagebuilder-*/bin/targets/*/-*-squashfs-sysupgrade.bin
-            immortalwrt-imagebuilder-*/bin/targets/*/-*-squashfs-factory.bin
-
+            immortalwrt-imagebuilder-*/bin/targets/*/$(find immortalwrt-imagebuilder-*/bin/targets/*/ -maxdepth 1 -type d -name '*-*-squashfs*' -exec basename {} \;)-sysupgrade.bin
+            immortalwrt-imagebuilder-*/bin/targets/*/$(find immortalwrt-imagebuilder-*/bin/targets/*/ -maxdepth 1 -type d -name '*-*-squashfs*' -exec basename {} \;)-factory.bin
+          if-no-files-found: warn
+          include-hidden-files: false
