@@ -1,11 +1,13 @@
 import os
 import requests
 from bs4 import BeautifulSoup
+import re
 
 # 指定文件路径
 repositories_conf_path = './repositories.conf'
 external_package_path = './external-package.txt'
 output_package_path = './packages.txt'
+download_folder = './packages'
 
 # 存储构建后的下载链接
 download_links = []
@@ -22,11 +24,10 @@ with open(repositories_conf_path, 'r') as file:
                 download_links.append(download_link)
 
 # 创建 ./packages 目录（如果不存在）
-download_folder = './packages'
 os.makedirs(download_folder, exist_ok=True)
 
 # 创建一个字典来存储包名及其下载链接
-package_names = {}
+package_versions = {}
 
 # 获取每个下载链接的内容并解析文件名
 for download_link in download_links:
@@ -36,7 +37,14 @@ for download_link in download_links:
         for link in soup.find_all('td', class_='link'):
             a_tag = link.find('a')
             if a_tag and a_tag['href'].endswith('.ipk'):
-                package_names[a_tag['href']] = download_link + '/' + a_tag['href']
+                # 解析版本号
+                match = re.match(r'^(.*?)(_.*?)-.*\.ipk$', a_tag['href'])
+                if match:
+                    name_version = match.group(1)
+                    version = match.group(2)
+                    package_versions.setdefault(name_version, (version, a_tag['href'], download_link))
+                    if version > package_versions[name_version][0]:
+                        package_versions[name_version] = (version, a_tag['href'], download_link)
 
 # 读取外部包文件的内容
 found_packages = []
@@ -46,12 +54,25 @@ with open(external_package_path, 'r') as external_file:
     for line in external_file:
         package_name = line.strip()
         # 尝试前端匹配
-        matches = [pkg for pkg in package_names if pkg.startswith(package_name)]
+        matches = [pkg for pkg, info in package_versions.items() if pkg.startswith(package_name)]
         if matches:
             found_packages.append(package_name)
             for match in matches:
-                full_download_link = package_names[match]
+                _, ipk_filename, download_link = package_versions[match]
+                full_download_link = download_link + '/' + ipk_filename
                 print(f"Found package: {package_name} at {full_download_link}")
+                
+                # 下载包
+                ipk_filepath = os.path.join(download_folder, ipk_filename)
+                try:
+                    with requests.get(full_download_link, stream=True) as r:
+                        r.raise_for_status()
+                        with open(ipk_filepath, 'wb') as f:
+                            for chunk in r.iter_content(chunk_size=8192):
+                                f.write(chunk)
+                    print(f"Downloaded {ipk_filename} successfully.")
+                except Exception as e:
+                    print(f"Failed to download {ipk_filename}: {e}")
         else:
             not_found_packages.append(package_name)
             print(f"No package matching: {package_name}")
