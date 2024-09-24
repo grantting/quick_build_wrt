@@ -20,7 +20,11 @@ if __name__ == "__main__":
         print("Usage: python building_image.py <profile-id>")
         sys.exit(1)
 
-    profile_id = sys.argv[1]
+    # 提取逗号前的部分作为 profile_id
+    profile_id_with_comma = sys.argv[1]
+    profile_id_parts = profile_id_with_comma.split(',')
+    profile_id = profile_id_parts[0].strip()
+    
     files = "files"
     
     # 读取插件列表
