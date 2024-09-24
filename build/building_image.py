@@ -1,8 +1,33 @@
-# building_image.py
-
 import subprocess
 import sys
 import os
+from configparser import ConfigParser
+
+def find_repositories_conf():
+    # 查找 repositories.conf 文件
+    for root, dirs, files in os.walk('.'):
+        if 'repositories.conf' in files:
+            return os.path.join(root, 'repositories.conf')
+    return None
+
+def update_repositories_conf(file_path):
+    # 更新 repositories.conf 文件中的 URL
+    config = ConfigParser()
+    config.read(file_path)
+    
+    if 'src/gz immortalwrt_packages' in config:
+        url = config.get('src/gz immortalwrt_packages', 'url')
+        new_url = url.replace('https://downloads.immortalwrt.org/releases/23.05.3/packages/', 'https://op.dllkids.xyz/packages/')
+        new_url = new_url.rstrip('/packages')
+        
+        if new_url != url:
+            config.set('src/gz immortalwrt_packages', 'url', new_url)
+            
+            with open(file_path, 'w') as configfile:
+                config.write(configfile)
+            return True
+    
+    return False
 
 def read_packages_from_file(filename):
     # 从文件中读取插件列表
@@ -27,6 +52,13 @@ if __name__ == "__main__":
     
     files = "files"
     
+    # 查找并更新 repositories.conf 文件
+    repositories_conf_path = find_repositories_conf()
+    if repositories_conf_path and update_repositories_conf(repositories_conf_path):
+        print(f"Updated URL in {repositories_conf_path}")
+    else:
+        print("Did not find repositories.conf or section not found.")
+
     # 读取插件列表
     filename = 'external-package.txt'
     packages = read_packages_from_file(filename)
@@ -34,8 +66,11 @@ if __name__ == "__main__":
     # 构建并打印命令
     command = build_command(profile_id, packages, files)
 
-      
     print(command)
 
-    # 执行构建命令
-    subprocess.run(command, shell=True, check=True)
+    try:
+        # 执行构建命令
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error: Command '{command}' failed with error code {e.returncode}.")
+        sys.exit(e.returncode)
