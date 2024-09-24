@@ -1,49 +1,71 @@
 import os
 import requests
-import gzip
-from shutil import copyfileobj
+from bs4 import BeautifulSoup
 
 # 指定文件路径
-file_path = './repositories.conf'
+repositories_conf_path = './repositories.conf'
+external_package_path = './external-package.txt'
+output_package_path = './packages.txt'
 
 # 存储构建后的下载链接
 download_links = []
 
 # 读取文件并检查每一行
-with open(file_path, 'r') as file:
+with open(repositories_conf_path, 'r') as file:
     for line in file:
         if 'src/gz immortalwrt_packages' in line:
             # 分割字符串
             parts = line.split('/packages')
             if len(parts) == 3:
                 # 构建新的下载链接
-                download_link = f'https://op.dllkids.xyz/packages{parts[1]}/Packages.gz'
+                download_link = f'https://op.dllkids.xyz/packages{parts[1]}'
                 download_links.append(download_link)
 
 # 创建 ./packages 目录（如果不存在）
 download_folder = './packages'
 os.makedirs(download_folder, exist_ok=True)
 
-# 下载并解压每个文件
-for link in download_links:
-    # 获取文件名
-    file_name = link.split('/')[-1]
-    file_path = f'{download_folder}/{file_name}'
-    extracted_file_path = f'{download_folder}/{file_name[:-3]}'
+# 创建一个字典来存储包名及其下载链接
+package_names = {}
 
-    # 下载文件
-    response = requests.get(link, stream=True)
+# 获取每个下载链接的内容并解析文件名
+for download_link in download_links:
+    response = requests.get(download_link)
     if response.status_code == 200:
-        with open(file_path, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
-        print(f'Successfully downloaded {file_name} to {file_path}')
+        soup = BeautifulSoup(response.content, 'html.parser')
+        for link in soup.find_all('td', class_='link'):
+            a_tag = link.find('a')
+            if a_tag and a_tag['href'].endswith('.ipk'):
+                package_names[a_tag['href']] = download_link + '/' + a_tag['href']
 
-        # 解压文件
-        with gzip.open(file_path, 'rb') as f_in:
-            with open(extracted_file_path, 'wb') as f_out:
-                copyfileobj(f_in, f_out)
-        print(f'Successfully extracted {file_name} to {extracted_file_path}')
-    else:
-        print(f'Failed to download {link}: Status code {response.status_code}')
+# 读取外部包文件的内容
+found_packages = []
+not_found_packages = []
+
+with open(external_package_path, 'r') as external_file:
+    for line in external_file:
+        package_name = line.strip()
+        # 尝试前端匹配
+        matches = [pkg for pkg in package_names if pkg.startswith(package_name)]
+        if matches:
+            found_packages.append(package_name)
+            for match in matches:
+                full_download_link = package_names[match]
+                print(f"Found package: {package_name} at {full_download_link}")
+        else:
+            not_found_packages.append(package_name)
+            print(f"No package matching: {package_name}")
+
+# 将找到的包名写入新的文件
+with open(output_package_path, 'w') as output_file:
+    for pkg in found_packages:
+        output_file.write(pkg + '\n')
+
+print(f"Found packages have been written to {output_package_path}")
+
+if not_found_packages:
+    print("The following packages were not found:")
+    for pkg in not_found_packages:
+        print(pkg)
+else:
+    print("All requested packages were found.")

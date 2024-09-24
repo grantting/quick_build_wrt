@@ -34,7 +34,7 @@ if __name__ == "__main__":
     files = "files"
     
     # 读取插件列表
-    filename = 'external-package.txt'
+    filename = 'packages.txt'
     packages = read_packages_from_file(filename)
 
     # 构建并打印命令
