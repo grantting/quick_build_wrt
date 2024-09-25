@@ -69,7 +69,7 @@ def main():
 
     # 构建 URL
     # firmware_version = '23.05.3'
-    firmware_version = os.getenv('FIRMWARE_VERSION', 'Unknown')
+    firmware_version = os.getenv('VERSION', '23.05.3')
     url = build_image_download_url(firmware_version, target)
 
     # 打印 URL 以便验证
