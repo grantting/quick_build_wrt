@@ -15,7 +15,7 @@ on:
       model_parameter:
         description: 'Parameters (visit readme)'
         required: true
-        default: 'xiaomi_mi-router-3g, ramips/mt7621'
+        default: 'xiaomi_mi-router-3g,ramips/mt7621'
         type: string
       upload_all:
         description: 'Upload All Artifacts'
@@ -37,8 +37,8 @@ jobs:
       VERSION: ${{ github.event.inputs.firmware_version }}
       DATE: $(date +%Y-%m-%d)
       DATETIME: $(date +%Y-%m-%d_%H-%M-%S) # 添加 DATETIME 环境变量
-      FIRMWARE_VERSION: ${{ github.event.inputs.firmware_version }}
-
+      MODEL: ''
+      
     steps:
       # 在 $GITHUB_WORKSPACE 下签出您的存储库，以便您的作业可以访问它
       - name: 查看
@@ -50,6 +50,14 @@ jobs:
         run: |
           sudo apt-get -qq update
           sudo apt-get -qq install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip qemu-utils mkisofs jq
+
+       # 提取 model 和 platform 参数
+      - name: Extract Model and Platform Parameters
+        run: |
+          MODEL_PARAMETER=${{ github.event.inputs.model_parameter }}
+          IFS=',' read -r MODEL PLATFORM <<< "$MODEL_PARAMETER"
+          echo "MODEL=$MODEL" >> $GITHUB_ENV
+          echo "PLATFORM=$PLATFORM" >> $GITHUB_ENV
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -76,9 +84,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: firmware-artifacts
+          name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL }}-images-${{ env.DATETIME }}
           path: |
-            immortalwrt-imagebuilder-*/bin/targets/*/$(find immortalwrt-imagebuilder-*/bin/targets/*/ -maxdepth 1 -type d -name '*-*-squashfs*' -exec basename {} \;)-sysupgrade.bin
-            immortalwrt-imagebuilder-*/bin/targets/*/$(find immortalwrt-imagebuilder-*/bin/targets/*/ -maxdepth 1 -type d -name '*-*-squashfs*' -exec basename {} \;)-factory.bin
-          if-no-files-found: warn
-          include-hidden-files: false
+            immortalwrt-imagebuilder-*/**/*.squashfs-sysupgrade.bin
+            immortalwrt-imagebuilder-*/**/*.squashfs-factory.bin
