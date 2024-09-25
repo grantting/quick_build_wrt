@@ -39,6 +39,7 @@ jobs:
       DATETIME: $(date +%Y-%m-%d_%H-%M-%S) # 添加 DATETIME 环境变量
       MODEL: ''
       FIRMWARE_VERSION: ${{ github.event.inputs.model_parameter}}
+      PLATFORM: ''
 
     steps:
       # 在 $GITHUB_WORKSPACE 下签出您的存储库，以便您的作业可以访问它
@@ -87,5 +88,4 @@ jobs:
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL }}-images-${{ env.DATETIME }}
           path: |
-            immortalwrt-imagebuilder-*/**/*.squashfs-sysupgrade.bin/*
-            immortalwrt-imagebuilder-*/**/*.squashfs-factory.bin/*
+            ${{ env.VENDOR }}-imagebuilder*/bin/targets/${{env.PLATFORM}}/*
