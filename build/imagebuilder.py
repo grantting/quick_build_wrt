@@ -1,5 +1,7 @@
 import os
+import subprocess
 import sys
+import urllib.parse
 import requests
 from tqdm import tqdm
 import tarfile
@@ -30,25 +32,19 @@ def download_file_with_progress(url):
 
     if total_size_in_bytes != 0 and progress.n != total_size_in_bytes:
         print("ERROR, download incomplete.")
-        return None
     else:
         print(f"文件已成功下载到 {filename}")
-        return filename
+    return filename
 
 def extract_with_progress(tar_path):
-    try:
-        with tarfile.open(tar_path, "r:xz") as tar:
-            members = tar.getmembers()
-            total_members = len(members)
-            progress = tqdm(total=total_members, unit='files', desc='Extracting')
-            for member in members:
-                tar.extract(member)
-                progress.update(1)
-            progress.close()
-    except tarfile.ReadError:
-        print("ERROR: 文件不是一个有效的 XZ 压缩文件。")
-        return False
-    return True
+    with tarfile.open(tar_path, "r:xz") as tar:
+        members = tar.getmembers()
+        total_members = len(members)
+        progress = tqdm(total=total_members, unit='files', desc='Extracting')
+        for member in members:
+            tar.extract(member)
+            progress.update(1)
+        progress.close()
 
 def parse_input(input_string):
     parts = input_string.split(',')
@@ -72,6 +68,7 @@ def main():
     print(f"接收到的参数：ID={id}, Target={target}")
 
     # 构建 URL
+    # firmware_version = '23.05.3'
     firmware_version = os.getenv('FIRMWARE_VERSION', 'Unknown')
     url = build_image_download_url(firmware_version, target)
 
@@ -80,13 +77,9 @@ def main():
 
     # 下载文件
     filename = download_file_with_progress(url)
-    if not filename:
-        sys.exit(1)
 
     # 解压文件并显示进度
-    if not extract_with_progress(filename):
-        sys.exit(1)
+    extract_with_progress(filename)
 
 if __name__ == "__main__":
-    import subprocess
     main()
