@@ -90,4 +90,4 @@ jobs:
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL }}-images-${{ env.DATETIME }}
           path: |
-            ${{ env.VENDOR }}-imagebuilder*/bin/targets/${{env.PLATFORM}}/*
+            ${{ env.VENDOR }}-imagebuilder*/bin/targets/${{ env.PLATFORM }}/*.bin
