@@ -40,6 +40,7 @@ jobs:
       MODEL: ''
       FIRMWARE_VERSION: ${{ github.event.inputs.model_parameter}}
       PLATFORM: ''
+      PLATFORM_DASH: ''
 
     steps:
       # 在 $GITHUB_WORKSPACE 下签出您的存储库，以便您的作业可以访问它
@@ -58,6 +59,9 @@ jobs:
         run: |
           MODEL_PARAMETER=${{ github.event.inputs.model_parameter }}
           IFS=',' read -r MODEL PLATFORM <<< "$MODEL_PARAMETER"
+
+          PLATFORM_DASH=${PLATFORM//\//--}
+          echo "PLATFORM_DASH=$PLATFORM_DASH" >> $GITHUB_ENV
           echo "MODEL=$MODEL" >> $GITHUB_ENV
           echo "PLATFORM=$PLATFORM" >> $GITHUB_ENV
           echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
@@ -90,4 +94,4 @@ jobs:
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL }}-images-${{ env.DATETIME }}
           path: |
-            bin/targets/${{ env.PLATFORM }}/*.bin
+            ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM_DASH}}/bin/targets/${{ env.PLATFORM }}/*.bin
