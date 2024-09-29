@@ -89,9 +89,25 @@ jobs:
           # python build/update_repositories.py
           python build/building_image.py "${{ github.event.inputs.model_parameter }}"
             
+      - name: 安装tmate
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tmate
+    
+      - name: 启动 tmate 会话
+        run: |
+          tmate_url=$(tmate -S nowebp)
+          echo "SSH URL: $tmate_url"
+          # 上面这行只是为了演示，在实际使用中你不会回显 URL。
+          # 相反，您可以通过电子邮件或其他安全渠道发送 URL。
+          
+      - name: 等待 tmate 会话准备就绪
+        run: |
+          sleep 30 # Wait for tmate to be ready for connections (you can adjust the time if needed)
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL }}-images-${{ env.DATETIME }}
           path: |
-            ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM_DASH}}/bin/targets/${{ env.PLATFORM }}/*.bin
+            ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM_DASH}}.Linux-x86_64/bin/targets/${{ env.PLATFORM }}/*.bin
