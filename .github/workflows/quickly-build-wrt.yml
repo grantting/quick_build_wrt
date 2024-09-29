@@ -86,8 +86,8 @@ jobs:
           python build/building_image.py "${{ github.event.inputs.model_parameter }}"
             
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL }}-images-${{ env.DATETIME }}
           path: |
-            ${{ env.VENDOR }}-imagebuilder*/bin/targets/${{ env.PLATFORM }}/*.bin
+            bin/targets/${{ env.PLATFORM }}/*.bin
