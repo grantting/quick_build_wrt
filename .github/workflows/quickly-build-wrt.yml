@@ -60,7 +60,7 @@ jobs:
           MODEL_PARAMETER=${{ github.event.inputs.model_parameter }}
           IFS=',' read -r MODEL PLATFORM <<< "$MODEL_PARAMETER"
 
-          PLATFORM_DASH=${PLATFORM//\//--}
+          PLATFORM_DASH=${PLATFORM//\//-}
           echo "PLATFORM_DASH=$PLATFORM_DASH" >> $GITHUB_ENV
           echo "MODEL=$MODEL" >> $GITHUB_ENV
           echo "PLATFORM=$PLATFORM" >> $GITHUB_ENV
