@@ -1,5 +1,14 @@
 # 导入必要的模块
 import os
+import sys
+
+# 检查是否提供了平台参数
+if len(sys.argv) < 2:
+    print("Usage: python build/create_custom.py PLATFORM")
+    sys.exit(1)
+
+# 获取平台参数
+platform = sys.argv[1]
 
 # 要写入的内容
 content = """\
@@ -10,7 +19,7 @@ EOI
 """
 
 # 文件路径
-file_path = "/etc/uci-defaults/99-custom"
+file_path = f"./target/linux/{platform}/base-files/etc/uci-defaults/99-custom"
 
 # 检查目录是否存在，如果不存在则创建
 directory = os.path.dirname(file_path)

@@ -77,16 +77,16 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r  $GITHUB_WORKSPACE/origin/build/requirements.txt # 如果有依赖文件，则安装依赖
       
-      - name: 下载解压
+      - name: download
         run: |
             python  $GITHUB_WORKSPACE/origin/build/imagebuilder.py "${{ github.event.inputs.model_parameter }}"
 
-      - name: 切换工作目录
+      - name: build
         run: |
           cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/${{ env.VENDOR }}-imagebuilder-*/
           cd ${{ env.VENDOR }}-imagebuilder-*/
           python build/download_packages.py
-          python build/create_custom.py
+          python build/create_custom.py "${{ env.PLATFORM }}"
           python build/building_image.py "${{ github.event.inputs.model_parameter }}"
             
       - name: Upload Artifacts
