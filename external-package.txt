@@ -12,3 +12,7 @@ quickstart
 luci-lib-taskd
 taskd
 luci-lib-xterm
+luci-app-opkg
+luci-app-bypass
+luci-app-adguardhome
+luci-app-my-dnshelper
