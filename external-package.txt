@@ -16,3 +16,4 @@ luci-app-opkg
 luci-app-bypass
 luci-app-adguardhome
 luci-app-my-dnshelper
+luci-app-wizard
