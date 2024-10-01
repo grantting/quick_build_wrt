@@ -1,38 +1,24 @@
+# 导入必要的模块
 import os
-import sys
-
-# 检查是否提供了平台参数
-if len(sys.argv) < 2:
-    print("Usage: python build/create_custom.py PLATFORM")
-    sys.exit(1)
-
-# 获取平台参数
-platform = sys.argv[1]
-
-# 如果platform是ramips/mt7621，则只保留斜杠前的部分
-if '/' in platform:
-    platform = platform.split('/')[0]
-
-# 构造目录路径
-directory = f"../target/linux/{platform}/base-files/etc/uci-defaults"
-# 文件路径
-file_path = os.path.join(directory, "99-custom")
 
 # 要写入的内容
 content = """\
-uci -q batch << EOI
+uci -q batch << 'EOI'
 set network.lan.ipaddr='192.168.10.1'
 set system.hostname='Router'
 EOI
 """
 
-# 检查目录是否存在
-if os.path.exists(directory):
-    # 创建文件并写入内容
-    with open(file_path, 'w') as file:
-        file.write(content)
-    print(f"File '{file_path}' has been created.")
-else:
-    # 输出当前所在目录
-    print(f"The directory '{directory}' does not exist.")
-    print(f"Current directory is '{os.getcwd()}'")
+# 文件路径
+file_path = f"../files/etc/uci-defaults/99_custom"
+
+# 检查目录是否存在，如果不存在则创建
+directory = os.path.dirname(file_path)
+if not os.path.exists(directory):
+    os.makedirs(directory)
+
+# 写入内容到文件
+with open(file_path, 'w') as file:  # 修改这里，指定了正确的文件路径和模式
+    file.write(content)
+
+print(f"File '{file_path}' has been created.")
