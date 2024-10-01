@@ -19,7 +19,7 @@ EOI
 """
 
 # 文件路径
-file_path = f"./target/linux/{platform}/base-files/etc/uci-defaults/99-custom"
+file_path = f"../target/linux/{platform}/base-files/etc/uci-defaults/99-custom"
 
 # 检查目录是否存在，如果不存在则创建
 directory = os.path.dirname(file_path)
