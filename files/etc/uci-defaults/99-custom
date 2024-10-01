@@ -2,4 +2,5 @@ uci -q batch << 'EOI'
 set network.lan.ipaddr='10.0.0.1'
 set luci.main.mediaurlbase='/luci-static/argon'
 set system.@system[0].hostname='Router'
+set wizard.default.ipv6='0'
 EOI
