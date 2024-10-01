@@ -20,7 +20,7 @@ EOI
 # 构造目录路径
 directory = f"../target/linux/{platform}/base-files/etc/uci-defaults"
 # 文件路径
-file_path = os.path.join(directory, "99_custom")
+file_path = os.path.join(directory, "99-custom")
 
 # 检查目录是否存在
 if os.path.exists(directory):
