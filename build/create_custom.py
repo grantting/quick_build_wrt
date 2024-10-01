@@ -1,4 +1,3 @@
-# 导入必要的模块
 import os
 import sys
 
@@ -18,16 +17,18 @@ set system.hostname='Router'
 EOI
 """
 
+# 构造目录路径
+directory = f"../target/linux/{platform}/base-files/etc/uci-defaults"
 # 文件路径
-file_path = f"../target/linux/{platform}/base-files/etc/uci-defaults/99-custom"
+file_path = os.path.join(directory, "99_custom")
 
-# 检查目录是否存在，如果不存在则创建
-directory = os.path.dirname(file_path)
-if not os.path.exists(directory):
-    os.makedirs(directory)
-
-# 写入内容到文件
-with open(file_path, 'w') as file:
-    file.write(content)
-
-print(f"File '{file_path}' has been created.")
+# 检查目录是否存在
+if os.path.exists(directory):
+    # 创建文件并写入内容
+    with open(file_path, 'w') as file:
+        file.write(content)
+    print(f"File '{file_path}' has been created.")
+else:
+    # 输出当前所在目录
+    print(f"The directory '{directory}' does not exist.")
+    print(f"Current directory is '{os.getcwd()}'")
