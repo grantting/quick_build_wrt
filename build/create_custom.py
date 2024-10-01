@@ -9,6 +9,15 @@ if len(sys.argv) < 2:
 # 获取平台参数
 platform = sys.argv[1]
 
+# 如果platform是ramips/mt7621，则只保留斜杠前的部分
+if '/' in platform:
+    platform = platform.split('/')[0]
+
+# 构造目录路径
+directory = f"../target/linux/{platform}/base-files/etc/uci-defaults"
+# 文件路径
+file_path = os.path.join(directory, "99-custom")
+
 # 要写入的内容
 content = """\
 uci -q batch << EOI
@@ -16,11 +25,6 @@ set network.lan.ipaddr='192.168.10.1'
 set system.hostname='Router'
 EOI
 """
-
-# 构造目录路径
-directory = f"../target/linux/{platform}/base-files/etc/uci-defaults"
-# 文件路径
-file_path = os.path.join(directory, "99-custom")
 
 # 检查目录是否存在
 if os.path.exists(directory):
