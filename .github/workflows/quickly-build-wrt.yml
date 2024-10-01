@@ -86,7 +86,6 @@ jobs:
           cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/${{ env.VENDOR }}-imagebuilder-*/
           cd ${{ env.VENDOR }}-imagebuilder-*/
           python build/download_packages.py
-          python build/create_custom.py
           python build/building_image.py "${{ github.event.inputs.model_parameter }}"
             
       - name: Upload Artifacts
