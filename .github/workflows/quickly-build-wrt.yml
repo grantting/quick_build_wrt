@@ -93,4 +93,4 @@ jobs:
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-${{ env.MODEL }}-images-${{ env.DATETIME }}
           path: |
-            ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM_DASH}}.Linux-x86_64/bin/targets/${{ env.PLATFORM }}/*.bin
+            ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-${{ env.PLATFORM_DASH}}.Linux-x86_64/bin/targets/${{ env.PLATFORM }}/*sysupgrade.bin

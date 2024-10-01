@@ -1,4 +1,6 @@
 uci -q batch << 'EOI'
 set network.lan.ipaddr='192.168.10.1'
 set luci.main.mediaurlbase='/luci-static/argon'
+set system.hostname='Router'
+set rpcd.password='$p$root'
 EOI
