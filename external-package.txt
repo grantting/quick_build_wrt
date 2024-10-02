@@ -13,7 +13,6 @@ luci-lib-xterm
 luci-app-bypass
 luci-app-adguardhome
 luci-app-my-dnshelper
-luci-app-wizard
 autocore
 base-files
 bash
@@ -48,7 +47,6 @@ luci-app-opkg
 luci-app-upnp
 luci-app-wizard
 luci-compat
-luci-lib-fs
 luci-lib-ipkg
 mtd
 nano
