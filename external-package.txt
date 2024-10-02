@@ -71,4 +71,4 @@ urngd
 wget-ssl
 wpad-basic-mbedtls
 zram-swap
-libubox20220515
+libubox
