@@ -38,3 +38,13 @@ kmod-tcp-bbr
 kmod-usb-ledtrig-usbport
 kmod-usb3
 libc
+libgcc
+libustream-mbedtls
+logd
+luci-app-advancedplus
+luci-app-fan
+luci-app-fileassistant
+luci-app-firewall
+luci-app-opkg
+luci-app-upnp
+luci-app-wizard
