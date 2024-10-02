@@ -45,7 +45,6 @@ luci-app-advancedplus
 luci-app-fan
 luci-app-fileassistant
 luci-app-firewall
-luci-app-opkg
 luci-app-upnp
 luci-app-wizard
 luci-compat
@@ -71,4 +70,3 @@ urngd
 wget-ssl
 wpad-basic-mbedtls
 zram-swap
-libubox
