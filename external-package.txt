@@ -57,3 +57,17 @@ netifd
 odhcp6c
 odhcpd-ipv6only
 openssh-sftp-server
+opkg
+ppp
+ppp-mod-pppoe
+procd
+resolveip
+swconfig
+uboot-envtools
+uci
+uclient-fetch
+urandom-seed
+urngd
+wget-ssl
+wpad-basic-mbedtls
+zram-swap
