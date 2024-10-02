@@ -28,3 +28,13 @@ dropbear
 ds-lite
 firewall4
 fstools
+htop
+kmod-gpio-button-hotplug
+kmod-leds-gpio
+kmod-lib-zstd
+kmod-mt7603
+kmod-mt76x2
+kmod-tcp-bbr
+kmod-usb-ledtrig-usbport
+kmod-usb3
+libc
