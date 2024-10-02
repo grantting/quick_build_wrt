@@ -48,3 +48,13 @@ luci-app-firewall
 luci-app-opkg
 luci-app-upnp
 luci-app-wizard
+luci-base
+luci-compat
+luci-lib-fs
+luci-lib-ipkg
+mtd
+nano
+netifd
+odhcp6c
+odhcpd-ipv6only
+openssh-sftp-server
