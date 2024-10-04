@@ -20,7 +20,7 @@ with open(repositories_conf_path, 'r') as file:
             parts = line.split('/packages')
             if len(parts) == 3:
                 # 构建新的下载链接
-                download_link = f'https://dl.openwrt.ai/23.05/packages{parts[1]}/kiddin9/'
+                download_link = f'https://dl.openwrt.ai/23.05/packages{parts[1]}/kiddin9'
                 download_links.append(download_link)
 
 # 创建 ./packages 目录（如果不存在）

@@ -4,3 +4,5 @@ luci-app-bypass
 luci-app-openclash
 luci-app-adguardhome
 luci-app-opkg
+luci-app-my-dnshelper
+luci-app-vlmcsd
