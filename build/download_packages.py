@@ -20,7 +20,7 @@ with open(repositories_conf_path, 'r') as file:
             parts = line.split('/packages')
             if len(parts) == 3:
                 # 构建新的下载链接
-                download_link = f'https://op.dllkids.xyz/packages{parts[1]}'
+                download_link = f'https://dl.openwrt.ai/23.05/packages{parts[1]}/kiddin9/'
                 download_links.append(download_link)
 
 # 创建 ./packages 目录（如果不存在）
@@ -53,6 +53,12 @@ not_found_packages = []
 with open(external_package_path, 'r') as external_file:
     for line in external_file:
         package_name = line.strip()
+        # 如果这一行是以 '-' 开头，则直接跳过搜索，并写入输出文件
+        if package_name.startswith('-'):
+            with open(output_package_path, 'a') as output_file:
+                output_file.write(package_name + '\n')
+            continue
+        
         # 尝试前端匹配
         matches = [pkg for pkg, info in package_versions.items() if pkg.startswith(package_name)]
         if matches:
@@ -77,12 +83,12 @@ with open(external_package_path, 'r') as external_file:
             not_found_packages.append(package_name)
             print(f"No package matching: {package_name}")
 
-# 将找到的包名写入新的文件
-with open(output_package_path, 'w') as output_file:
+# 将找到的包名追加到已有的输出文件中
+with open(output_package_path, 'a') as output_file:
     for pkg in found_packages:
         output_file.write(pkg + '\n')
 
-print(f"Found packages have been written to {output_package_path}")
+print(f"Found packages have been appended to {output_package_path}")
 
 if not_found_packages:
     print("The following packages were not found:")
