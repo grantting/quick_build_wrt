@@ -1,13 +1,17 @@
-uci -q batch << 'EOI'
+# 设置UCI配置
+uci -q batch <<- 'EOF'
 set network.lan.ipaddr='10.0.0.1'
 set luci.main.mediaurlbase='/luci-static/argon'
 set system.@system[0].hostname='路由器'
 set wizard.default.ipv6='0'
 set wireless.default_radio0.ssid='WiFi'
 set wireless.default_radio1.ssid='WiFi'
+EOF
 
+# 设置root密码
 root_password="root"
 if [ -n "$root_password" ]; then
   (echo "$root_password"; sleep 1; echo "$root_password") | passwd > /dev/null
 fi
-EOI
+
+echo "All configurations applied successfully!"

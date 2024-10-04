@@ -3,4 +3,4 @@ luci-app-wizard
 luci-app-bypass
 luci-app-openclash
 luci-app-adguardhome
-luci-i18n-opkg-zh-cn
+luci-app-opkg
