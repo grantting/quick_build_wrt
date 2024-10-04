@@ -6,10 +6,8 @@ set wizard.default.ipv6='0'
 set wireless.default_radio0.ssid='WiFi'
 set wireless.default_radio1.ssid='WiFi'
 
-echo 'Updating root password'
-NEWPASSWD='root'
-passwd <<EOF
-$NEWPASSWD
-$NEWPASSWD
-EOF
+root_password="root"
+if [ -n "$root_password" ]; then
+  (echo "$root_password"; sleep 1; echo "$root_password") | passwd > /dev/null
+fi
 EOI
