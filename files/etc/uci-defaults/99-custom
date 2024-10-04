@@ -1,6 +1,15 @@
 uci -q batch << 'EOI'
 set network.lan.ipaddr='10.0.0.1'
 set luci.main.mediaurlbase='/luci-static/argon'
-set system.@system[0].hostname='Router'
+set system.@system[0].hostname='路由器'
 set wizard.default.ipv6='0'
+set wireless.wifi-iface[0].ssid='WiFi'
+set wireless.wifi-iface[1].ssid='WiFi'
+
+echo 'Updating root password'
+NEWPASSWD='root'
+passwd <<EOF
+$NEWPASSWD
+$NEWPASSWD
+EOF
 EOI
