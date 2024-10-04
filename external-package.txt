@@ -5,4 +5,5 @@ luci-app-openclash
 luci-app-adguardhome
 luci-app-opkg
 luci-app-my-dnshelper
+my-dnshelper
 luci-app-vlmcsd
