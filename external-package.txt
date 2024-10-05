@@ -7,3 +7,5 @@ luci-app-opkg
 luci-app-my-dnshelper
 my-dnshelper
 luci-app-vlmcsd
+luci-app-uhttpd
+luci-app-nekobox

@@ -2,7 +2,7 @@
 uci -q batch <<- 'EOF'
 set network.lan.ipaddr='10.0.0.1'
 set luci.main.mediaurlbase='/luci-static/argon'
-set system.@system[0].hostname='路由器'
+set system.@system[0].hostname='Router'
 set wizard.default.ipv6='0'
 set wireless.default_radio0.ssid='WiFi'
 set wireless.default_radio1.ssid='WiFi'
