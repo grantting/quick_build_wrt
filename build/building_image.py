@@ -18,7 +18,7 @@ def read_packages_from_file(filename):
 
 def build_command(profile_id, packages, files):
     # 构造make命令
-    command = f"make image PROFILE=\"{profile_id}\" PACKAGES=\"{packages}\" FILES=\"{files}\" ROOTFS_PARTSIZE=\"100\""
+    command = f"make image PROFILE=\"{profile_id}\" PACKAGES=\"{packages}\" FILES=\"{files}\" ROOTFS_PARTSIZE=\"1000\""
     return command
 
 if __name__ == "__main__":
