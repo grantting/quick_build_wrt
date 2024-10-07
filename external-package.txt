@@ -1,4 +1,5 @@
 luci-theme-argon
+luci-app-argon-config
 luci-app-wizard
 luci-app-bypass
 luci-app-openclash
@@ -8,4 +9,5 @@ luci-app-my-dnshelper
 my-dnshelper
 luci-app-vlmcsd
 luci-app-uhttpd
-luci-app-nekobox
+luci-app-timedreboot
+luci-app-autotimeset
