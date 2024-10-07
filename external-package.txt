@@ -1,3 +1,4 @@
+my-dnshelper
 luci-theme-argon
 luci-app-argon-config
 luci-app-wizard
@@ -6,7 +7,6 @@ luci-app-openclash
 luci-app-adguardhome
 luci-app-opkg
 luci-app-my-dnshelper
-my-dnshelper
 luci-app-vlmcsd
 luci-app-uhttpd
 luci-app-timedreboot
