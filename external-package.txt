@@ -3,9 +3,9 @@ luci-app-argon-config
 luci-app-wizard
 luci-app-bypass
 luci-app-openclash
-luci-app-adguardhome
 luci-app-opkg
 luci-app-vlmcsd
 luci-app-uhttpd
 luci-app-timedreboot
 luci-app-autotimeset
+luci-app-adbyby-plus
