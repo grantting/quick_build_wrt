@@ -9,4 +9,5 @@ luci-app-uhttpd
 luci-app-timedreboot
 luci-app-autotimeset
 luci-app-adbyby-plus
+clouddrive2
 luci-app-clouddrive2
