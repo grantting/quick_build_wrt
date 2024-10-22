@@ -2,6 +2,10 @@ luci-theme-argon
 luci-app-argon-config
 luci-app-wizard
 luci-app-bypass
+iptables-nft
+arptables-nft
+ebtables-nft
+xtables-nft 
 luci-app-openclash
 luci-app-opkg
 luci-app-vlmcsd
