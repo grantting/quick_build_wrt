@@ -6,5 +6,4 @@ luci-app-vlmcsd
 luci-app-uhttpd
 luci-app-timedreboot
 luci-app-autotimeset
-luci-app-adguardhome
 luci-app-turboacc
