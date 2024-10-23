@@ -1,7 +1,5 @@
 luci-theme-argon
-luci-app-argon-config
 luci-app-wizard
-luci-app-bypass
 luci-app-openclash
 luci-app-opkg
 luci-app-vlmcsd
@@ -10,7 +8,3 @@ luci-app-timedreboot
 luci-app-autotimeset
 luci-app-adguardhome
 luci-app-turboacc
-iptables-nft
-arptables-nft
-ebtables-nft
-xtables-nft 
