@@ -127,11 +127,11 @@ with open(output_package_path, 'a') as output_file:
     for pkg in found_packages:
         output_file.write(pkg + '\n')
 
-print(f"Found packages have been appended to {output_package_path}")
+print(f"发现包已附加到 {output_package_path}")
 
 if not_found_packages:
-    print("The following packages were not found:")
+    print("未找到以下软件包：")
     for pkg in not_found_packages:
         print(pkg)
 else:
-    print("All requested packages were found.")
+    print("已找到所有请求的包。")
