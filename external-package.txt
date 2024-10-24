@@ -7,3 +7,4 @@ luci-app-uhttpd
 luci-app-timedreboot
 luci-app-autotimeset
 luci-app-turboacc
+luci-app-nekobox
