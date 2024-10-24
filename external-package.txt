@@ -16,7 +16,6 @@ busybox
 ca-bundle
 coremark
 curl
-dnsmasq-full
 dropbear
 ds-lite
 firewall4
@@ -40,7 +39,6 @@ luci-app-firewall
 luci-app-opkg
 luci-app-upnp
 luci-app-wizard
-luci-base
 luci-compat
 luci-lib-fs
 luci-lib-ipkg
