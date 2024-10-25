@@ -4,15 +4,7 @@ set network.lan.ipaddr='10.0.0.1'
 
 set luci.main.mediaurlbase='/luci-static/argon'
 
-set system.@system[0].hostname='Router'
-
 set wizard.default.ipv6='0'
-
-set wireless.default_radio0.ssid='WiFi'
-set wireless.default_radio1.ssid='WiFi'
-
-set wireless.default_radio0.channel='auto'
-set wireless.default_radio1.channel='auto'
 
 set wireless.default_radio0.ieee80211r='1'
 set wireless.default_radio1.ieee80211r='1'

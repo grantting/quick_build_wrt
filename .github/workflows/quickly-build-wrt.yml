@@ -16,7 +16,7 @@ on:
       model_parameter:
         description: 'Parameters (visit readme)'
         required: true
-        default: 'xiaomi_mi-router-3g,ramips/mt7621'
+        default: ''
         type: string
       upload_all:
         description: 'Upload All Artifacts'
