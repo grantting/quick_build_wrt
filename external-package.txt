@@ -5,6 +5,7 @@ luci-app-opkg
 opkg
 luci-app-passwall
 luci-app-mosdns
+v2dat
 luci-app-ttyd
 luci-app-timedreboot
 luci-app-turboacc
