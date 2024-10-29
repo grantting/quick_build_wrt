@@ -10,3 +10,6 @@ luci-app-ttyd
 luci-app-timedreboot
 luci-app-turboacc
 kmod-nft-socket
+luci-app-upnp
+luci-app-vlmcsd
+luci-app-travelmate
