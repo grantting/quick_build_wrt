@@ -16,7 +16,7 @@ on:
       model_parameter:
         description: 'Parameters (visit readme)'
         required: true
-        default: 'redmi_ax6-stock,ipq807x/generic'
+        default: 'redmi_ax6,ipq807x/generic'
         type: string
       upload_all:
         description: 'Upload All Artifacts'

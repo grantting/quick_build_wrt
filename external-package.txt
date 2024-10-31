@@ -15,7 +15,6 @@ luci-app-advancedplus
 luci-app-fan
 luci-app-fileassistant
 luci-app-firewall
-luci-base
 luci-lib-fs
 nano
 odhcp6c
