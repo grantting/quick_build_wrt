@@ -64,6 +64,9 @@ if response.status_code == 200:
                 if version > secondary_package_versions[name_version][0]:
                     secondary_package_versions[name_version] = (version, a_tag['href'], secondary_base_url)
 
+# 合并两个字典
+package_versions.update(secondary_package_versions)
+
 # 读取外部包文件的内容
 found_packages = []
 not_found_packages = []
@@ -98,29 +101,8 @@ with open(external_package_path, 'r') as external_file:
                 except Exception as e:
                     print(f"Failed to download {ipk_filename}: {e}")
         else:
-            # 在第二个包库中查找
-            matches = [pkg for pkg, info in secondary_package_versions.items() if pkg.startswith(package_name)]
-            if matches:
-                found_packages.append(package_name)
-                for match in matches:
-                    _, ipk_filename, download_link = secondary_package_versions[match]
-                    full_download_link = download_link + '/' + ipk_filename
-                    print(f"Found package: {package_name} at {full_download_link}")
-                    
-                    # 下载包
-                    ipk_filepath = os.path.join(download_folder, ipk_filename)
-                    try:
-                        with requests.get(full_download_link, stream=True) as r:
-                            r.raise_for_status()
-                            with open(ipk_filepath, 'wb') as f:
-                                for chunk in r.iter_content(chunk_size=8192):
-                                    f.write(chunk)
-                        print(f"Downloaded {ipk_filename} successfully.")
-                    except Exception as e:
-                        print(f"Failed to download {ipk_filename}: {e}")
-            else:
-                not_found_packages.append(package_name)
-                print(f"No package matching: {package_name}")
+            not_found_packages.append(package_name)
+            print(f"No package matching: {package_name}")
 
 # 将找到的包名追加到已有的输出文件中
 with open(output_package_path, 'a') as output_file:
