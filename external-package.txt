@@ -13,6 +13,4 @@ kmod-nft-socket
 luci-app-upnp
 luci-app-vlmcsd
 luci-app-travelmate
-ath11k-firmware-ipq8074
-ipq-wifi-redmi_ax6
 uboot-envtools
