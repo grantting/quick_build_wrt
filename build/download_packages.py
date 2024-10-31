@@ -3,26 +3,52 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-# 读取.config文件，获取arch_packages
+# 读取.config文件，获取arch_packages, board, subtarget
 with open('.config', 'r') as file:
     config_content = file.read()
 
-match = re.search(r'CONFIG_TARGET_ARCH_PACKAGES="([^"]+)"', config_content)
-if match:
-    arch_packages = match.group(1)
+match_arch_packages = re.search(r'CONFIG_TARGET_ARCH_PACKAGES="([^"]+)"', config_content)
+if match_arch_packages:
+    arch_packages = match_arch_packages.group(1)
 else:
     raise ValueError("Could not find CONFIG_TARGET_ARCH_PACKAGES in the .config file")
 
+match_board = re.search(r'CONFIG_TARGET_BOARD="([^"]+)"', config_content)
+if match_board:
+    board = match_board.group(1)
+else:
+    raise ValueError("Could not find CONFIG_TARGET_BOARD in the .config file")
+
+match_subtarget = re.search(r'CONFIG_TARGET_SUBTARGET="([^"]+)"', config_content)
+if match_subtarget:
+    subtarget = match_subtarget.group(1)
+else:
+    raise ValueError("Could not find CONFIG_TARGET_SUBTARGET in the .config file")
+
 print(f"Arch Packages: {arch_packages}")
+print(f"Board: {board}")
+print(f"Subtarget: {subtarget}")
 
 # 读取external-package.txt文件
 with open('external-package.txt', 'r') as file:
     package_names = file.read().splitlines()
 
+# 请求imagebuilder packages列表
+url_imagebuilder = f"https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/{board}/{subtarget}/packages/"
+response = requests.get(url_imagebuilder)
+soup = BeautifulSoup(response.text, 'html.parser')
+imagebuilder_packages = [a['href'] for a in soup.select('td.n > a[href$=".ipk"]')]
+
+# 提取包名
+imagebuilder_package_names = [os.path.basename(link).split('_')[0] for link in imagebuilder_packages]
+
+# 合并包名列表
+all_package_names = set(package_names + imagebuilder_package_names)
+
 # 准备输出文件
 found_packages = []
 
-for package_name in package_names:
+for package_name in all_package_names:
     # 构建URL
     url_kiddin9 = f"https://dl.openwrt.ai/23.05/packages/{arch_packages}/kiddin9/"
     url_base = f"https://dl.openwrt.ai/23.05/packages/{arch_packages}/base/"
@@ -68,7 +94,7 @@ for package_name in package_names:
         print(f"Package {package_name} not found")
 
 # 创建build目录（如果不存在）
-# os.makedirs('build', exist_ok=True)
+os.makedirs('build', exist_ok=True)
 
 # 将找到的包名写入当前packages.txt，确保最后一行没有空行
 with open('packages.txt', 'w') as output_file:
