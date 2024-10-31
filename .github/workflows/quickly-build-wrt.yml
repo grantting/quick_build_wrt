@@ -78,11 +78,11 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r  $GITHUB_WORKSPACE/origin/build/requirements.txt # 如果有依赖文件，则安装依赖
       
-      - name: download
+      - name: imagebuilder download
         run: |
             python  $GITHUB_WORKSPACE/origin/build/imagebuilder.py "${{ github.event.inputs.model_parameter }}"
 
-      - name: build
+      - name: packages download and build
         run: |
           cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/${{ env.VENDOR }}-imagebuilder-*/
           cd ${{ env.VENDOR }}-imagebuilder-*/
