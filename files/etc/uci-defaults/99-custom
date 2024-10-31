@@ -3,6 +3,8 @@ uci -q batch <<- 'EOF'
 set network.lan.ipaddr='10.0.0.1'
 set luci.main.mediaurlbase='/luci-static/argon'
 
+set wizard.default.ipv6='0'
+
 EOF
 
 root_password="root"

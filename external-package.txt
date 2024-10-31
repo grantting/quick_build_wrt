@@ -14,3 +14,4 @@ luci-app-upnp
 luci-app-vlmcsd
 luci-app-travelmate
 uboot-envtools
+wpad-wolfssl
