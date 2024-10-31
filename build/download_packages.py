@@ -68,10 +68,10 @@ for package_name in package_names:
         print(f"Package {package_name} not found")
 
 # 创建build目录（如果不存在）
-os.makedirs('build', exist_ok=True)
+# os.makedirs('build', exist_ok=True)
 
 # 将找到的包名写入当前packages.txt，确保最后一行没有空行
-with open('build/packages.txt', 'w') as output_file:
+with open('packages.txt', 'w') as output_file:
     for i, package_name in enumerate(found_packages):
         output_file.write(f"{package_name}\n" if i < len(found_packages) - 1 else package_name)
 
