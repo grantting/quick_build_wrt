@@ -70,10 +70,10 @@ for package_name in package_names:
 # 创建build目录（如果不存在）
 os.makedirs('build', exist_ok=True)
 
-# 将找到的包名写入build/package.txt
+# 将找到的包名写入build/package.txt，确保最后一行没有空行
 with open('build/package.txt', 'w') as output_file:
-    for package_name in found_packages:
-        output_file.write(f"{package_name}\n")
+    for i, package_name in enumerate(found_packages):
+        output_file.write(f"{package_name}\n" if i < len(found_packages) - 1 else package_name)
 
 # 创建packages目录（如果不存在）
 os.makedirs('packages', exist_ok=True)
