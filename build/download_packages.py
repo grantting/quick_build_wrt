@@ -67,8 +67,11 @@ for package_name in package_names:
     else:
         print(f"Package {package_name} not found")
 
-# 将找到的包名写入package.txt
-with open('package.txt', 'w') as output_file:
+# 创建build目录（如果不存在）
+os.makedirs('build', exist_ok=True)
+
+# 将找到的包名写入build/package.txt
+with open('build/package.txt', 'w') as output_file:
     for package_name in found_packages:
         output_file.write(f"{package_name}\n")
 
