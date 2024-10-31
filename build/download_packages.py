@@ -17,7 +17,7 @@ PLATFORM = os.getenv('PLATFORM', 'generic')  # 默认为generic，根据实际�
 
 # 包库的基本URL
 primary_base_url = "https://dl.openwrt.ai/23.05/packages"
-secondary_base_url = f"https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/{PLATFORM}/packages"
+secondary_base_url = f"https://dl.openwrt.ai/23.05/packages/{PLATFORM}/base"
 
 # 创建一个字典来存储包名及其下载链接
 package_versions = {}
