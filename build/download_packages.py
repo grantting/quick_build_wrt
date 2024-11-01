@@ -166,21 +166,14 @@ for package_name in found_packages:
         print(f"Downloaded: {filepath}")
 
 # 读取并修改 repositories.conf 文件
-def replace_repository_url(file_path, new_url):
+def append_repository_url(file_path, new_url):
     # 读取并修改 repositories.conf 文件
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
-
-    with open(file_path, 'w') as file:
-        for line in lines:
-            if line.startswith('src/gz immortalwrt_packages'):
-                file.write(f'src/gz immortalwrt_packages {new_url}\n')
-            else:
-                file.write(line)
+    with open(file_path, 'a') as file:
+        file.write(f'src/gz kiddin9_packages {new_url}\n')
 
 # 查找 repositories.conf 文件
 repositories_conf = find_repositories_conf()
 if repositories_conf:
-    replace_repository_url(repositories_conf, 'url_kiddin9')
+    append_repository_url(repositories_conf, 'url_kiddin9')
 else:
-    print("Warning: repositories.conf not found. Skipping repository URL replacement.")
+    print("Warning: repositories.conf not found. Skipping repository URL addition.")
