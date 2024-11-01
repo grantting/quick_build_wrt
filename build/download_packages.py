@@ -98,7 +98,7 @@ with open('packages.txt', 'w') as output_file:
         output_file.write(f"{package_name}\n" if i < len(found_packages) - 1 else package_name)
 
 # 创建immortalwrt_packages目录（如果不存在）
-os.makedirs('immortalwrt_packages', exist_ok=True)
+os.makedirs('packages', exist_ok=True)
 
 # 下载文件
 for package_name in found_packages:
@@ -159,7 +159,7 @@ for package_name in found_packages:
 
     if found:
         filename = download_url.split('/')[-1]
-        filepath = os.path.join('immortalwrt_packages', filename)
+        filepath = os.path.join('packages', filename)
         response = requests.get(download_url)
         with open(filepath, 'wb') as f:
             f.write(response.content)
