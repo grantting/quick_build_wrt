@@ -3,56 +3,36 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-# 读取.config文件，获取arch_packages, board, subtarget
+# 读取环境变量 PLATFORM
+platform = os.getenv('PLATFORM')
+if not platform:
+    raise ValueError("Environment variable PLATFORM is not set")
+
+# 读取.config文件，获取arch_packages
 with open('.config', 'r') as file:
     config_content = file.read()
 
-match_arch_packages = re.search(r'CONFIG_TARGET_ARCH_PACKAGES="([^"]+)"', config_content)
-if match_arch_packages:
-    arch_packages = match_arch_packages.group(1)
+match = re.search(r'CONFIG_TARGET_ARCH_PACKAGES="([^"]+)"', config_content)
+if match:
+    arch_packages = match.group(1)
 else:
     raise ValueError("Could not find CONFIG_TARGET_ARCH_PACKAGES in the .config file")
 
-match_board = re.search(r'CONFIG_TARGET_BOARD="([^"]+)"', config_content)
-if match_board:
-    board = match_board.group(1)
-else:
-    raise ValueError("Could not find CONFIG_TARGET_BOARD in the .config file")
-
-match_subtarget = re.search(r'CONFIG_TARGET_SUBTARGET="([^"]+)"', config_content)
-if match_subtarget:
-    subtarget = match_subtarget.group(1)
-else:
-    raise ValueError("Could not find CONFIG_TARGET_SUBTARGET in the .config file")
-
 print(f"Arch Packages: {arch_packages}")
-print(f"Board: {board}")
-print(f"Subtarget: {subtarget}")
 
 # 读取external-package.txt文件
 with open('external-package.txt', 'r') as file:
     package_names = file.read().splitlines()
 
-# 请求imagebuilder packages列表
-url_imagebuilder = f"https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/{board}/{subtarget}/packages/"
-response = requests.get(url_imagebuilder)
-soup = BeautifulSoup(response.text, 'html.parser')
-imagebuilder_packages = [a['href'] for a in soup.select('td.n > a[href$=".ipk"]')]
-
-# 提取包名
-imagebuilder_package_names = [os.path.basename(link).split('_')[0] for link in imagebuilder_packages]
-
-# 合并包名列表
-all_package_names = set(package_names + imagebuilder_package_names)
-
 # 准备输出文件
 found_packages = []
 
-for package_name in all_package_names:
+for package_name in package_names:
     # 构建URL
     url_kiddin9 = f"https://dl.openwrt.ai/23.05/packages/{arch_packages}/kiddin9/"
     url_base = f"https://dl.openwrt.ai/23.05/packages/{arch_packages}/base/"
     url_packages = f"https://dl.openwrt.ai/23.05/packages/{arch_packages}/packages/"
+    url_immortalwrt = f"https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/{platform}/packages/"
 
     # 请求kiddin9目录
     response = requests.get(url_kiddin9)
@@ -88,21 +68,29 @@ for package_name in all_package_names:
                 found = True
                 break
 
+    if not found:
+        # 请求immortalwrt目录
+        response = requests.get(url_immortalwrt)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        links = [a['href'] for a in soup.find_all('a', href=True) if a['href'].endswith('.ipk')]
+
+        for link in links:
+            if link.startswith(package_name + '_'):
+                found = True
+                break
+
     if found:
         found_packages.append(package_name)
     else:
         print(f"Package {package_name} not found")
-
-# 创建build目录（如果不存在）
-os.makedirs('build', exist_ok=True)
 
 # 将找到的包名写入当前packages.txt，确保最后一行没有空行
 with open('packages.txt', 'w') as output_file:
     for i, package_name in enumerate(found_packages):
         output_file.write(f"{package_name}\n" if i < len(found_packages) - 1 else package_name)
 
-# 创建packages目录（如果不存在）
-os.makedirs('packages', exist_ok=True)
+# 创建immortalwrt_packages目录（如果不存在）
+os.makedirs('immortalwrt_packages', exist_ok=True)
 
 # 下载文件
 for package_name in found_packages:
@@ -110,6 +98,7 @@ for package_name in found_packages:
     url_kiddin9 = f"https://dl.openwrt.ai/23.05/packages/{arch_packages}/kiddin9/"
     url_base = f"https://dl.openwrt.ai/23.05/packages/{arch_packages}/base/"
     url_packages = f"https://dl.openwrt.ai/23.05/packages/{arch_packages}/packages/"
+    url_immortalwrt = f"https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/{platform}/packages/"
 
     # 请求kiddin9目录
     response = requests.get(url_kiddin9)
@@ -148,9 +137,21 @@ for package_name in found_packages:
                 found = True
                 break
 
+    if not found:
+        # 请求immortalwrt目录
+        response = requests.get(url_immortalwrt)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        links = [a['href'] for a in soup.find_all('a', href=True) if a['href'].endswith('.ipk')]
+
+        for link in links:
+            if link.startswith(package_name + '_'):
+                download_url = url_immortalwrt + link
+                found = True
+                break
+
     if found:
         filename = download_url.split('/')[-1]
-        filepath = os.path.join('packages', filename)
+        filepath = os.path.join('immortalwrt_packages', filename)
         response = requests.get(download_url)
         with open(filepath, 'wb') as f:
             f.write(response.content)
