@@ -3,8 +3,16 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
+# 定义查找 repositories.conf 文件的函数
+def find_repositories_conf():
+    # 查找 repositories.conf 文件
+    for root, dirs, files in os.walk('.'):
+        if 'repositories.conf' in files:
+            return os.path.join(root, 'repositories.conf')
+    return None
+
 # 读取环境变量 PLATFORM
-platform = os.getenv('PLATFORM')
+platform = os.getenv('PLATFORM', 'ipq807x/generic')
 if not platform:
     raise ValueError("Environment variable PLATFORM is not set")
 
@@ -156,3 +164,23 @@ for package_name in found_packages:
         with open(filepath, 'wb') as f:
             f.write(response.content)
         print(f"Downloaded: {filepath}")
+
+# 读取并修改 repositories.conf 文件
+def replace_repository_url(file_path, new_url):
+    # 读取并修改 repositories.conf 文件
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    with open(file_path, 'w') as file:
+        for line in lines:
+            if line.startswith('src/gz immortalwrt_packages'):
+                file.write(f'src/gz immortalwrt_packages {new_url}\n')
+            else:
+                file.write(line)
+
+# 查找 repositories.conf 文件
+repositories_conf = find_repositories_conf()
+if repositories_conf:
+    replace_repository_url(repositories_conf, 'url_kiddin9')
+else:
+    print("Warning: repositories.conf not found. Skipping repository URL replacement.")
