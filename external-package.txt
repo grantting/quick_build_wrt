@@ -3,7 +3,6 @@ luci-app-wizard
 luci-app-openclash
 luci-app-opkg
 luci-app-passwall
-luci-app-mosdns
 luci-app-ttyd
 luci-app-timedreboot
 luci-app-turboacc
