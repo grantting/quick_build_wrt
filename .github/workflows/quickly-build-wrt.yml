@@ -21,6 +21,23 @@ on:
         options:
           - redmi_ax6-stock,ipq807x/generic
           - qihoo_360t7-ubootmod,mediatek/filogic
+      luci_apps:
+        description: 'Choose Luci Apps (comma separated)'
+        required: true
+        default: 'luci-theme-argon,luci-app-wizard'
+        type: choice
+        options:
+          - luci-theme-argon
+          - luci-app-wizard
+          - luci-app-openclash
+          - luci-app-opkg
+          - luci-app-passwall
+          - luci-app-ttyd
+          - luci-app-timedreboot
+          - luci-app-turboacc
+          - luci-app-upnp
+          - luci-app-vlmcsd
+          - luci-app-travelmate
       upload_all:
         description: 'Upload All Artifacts'
         required: false
