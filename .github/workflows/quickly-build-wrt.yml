@@ -64,7 +64,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8 # 或者你所需的Python版本
+          python-version: 3.9 # 或者你所需的Python版本
 
       - name: Install dependencies
         run: |
