@@ -37,9 +37,9 @@ found_packages = []
 
 for package_name in package_names:
     # 构建URL
-    url_kiddin9 = f"https://dl.openwrt.ai/packages-24.10/{arch_packages}/kiddin9/"
-    url_base = f"https://dl.openwrt.ai/packages-24.10/{arch_packages}/base/"
-    url_packages = f"https://dl.openwrt.ai/packages-24.10/{arch_packages}/packages/"
+    url_kiddin9 = f"https://dl.openwrt.aireleases/24.10/packages/{arch_packages}/kiddin9/"
+    url_base = f"https://dl.openwrt.aireleases/24.10/packages/{arch_packages}/base/"
+    url_packages = f"https://dl.openwrt.aireleases/24.10/packages/{arch_packages}/packages/"
     url_immortalwrt = f"https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/{platform}/packages/"
 
     # 请求kiddin9目录
@@ -103,9 +103,9 @@ os.makedirs('packages', exist_ok=True)
 # 下载文件
 for package_name in found_packages:
     # 构建URL
-    url_kiddin9 = f"https://dl.openwrt.ai/packages-24.10/{arch_packages}/kiddin9/"
-    url_base = f"https://dl.openwrt.ai/packages-24.10/{arch_packages}/base/"
-    url_packages = f"https://dl.openwrt.ai/packages-24.10/{arch_packages}/packages/"
+    url_kiddin9 = f"https://dl.openwrt.aireleases/24.10/packages/{arch_packages}/kiddin9/"
+    url_base = f"https://dl.openwrt.aireleases/24.10/packages/{arch_packages}/base/"
+    url_packages = f"https://dl.openwrt.aireleases/24.10/packages/{arch_packages}/packages/"
     url_immortalwrt = f"https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/{platform}/packages/"
 
     # 请求kiddin9目录

@@ -1,6 +1,5 @@
 luci-theme-argon
 luci-app-wizard
-luci-app-openclash
 luci-app-opkg
 luci-app-passwall
 luci-app-ttyd
@@ -9,6 +8,7 @@ luci-app-turboacc
 luci-app-upnp
 luci-app-vlmcsd
 luci-app-travelmate
+luci-app-homeproxy
 uboot-envtools
 v2dat
 kmod-nft-socket
