@@ -1,16 +1,1 @@
-luci-theme-argon
-luci-app-wizard
-luci-app-opkg
-luci-app-bypass
-luci-app-ttyd
-luci-app-timedreboot
-luci-app-turboacc
-luci-app-upnp
-luci-app-vlmcsd
-luci-app-travelmate
-luci-app-adguardhome
-luci-app-passwall
-uboot-envtools
-v2dat
-kmod-nft-socket
-opkg
+luci-i18n-passwall-zh-cn
