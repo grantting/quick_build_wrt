@@ -104,7 +104,7 @@ os.makedirs('packages', exist_ok=True)
 # 下载文件
 for package_name in found_packages:
     # 构建URL
-    url_ustc = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/kiddin9/"
+    url_ustc = f"https://mirrors.ustc.edu.cn/immortalwrt/releases/23.05.4/packages/{arch_packages}/luci/"
     url_base = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/base/"
     url_packages = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/packages/"
     url_immortalwrt = f"https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/{platform}/packages/"
