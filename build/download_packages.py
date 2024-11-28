@@ -37,13 +37,14 @@ found_packages = []
 
 for package_name in package_names:
     # 构建URL
-    url_kiddin9 = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/kiddin9/"
+    # url_kiddin9 = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/kiddin9/"
+    url_ustc=f"https://mirrors.ustc.edu.cn/immortalwrt/releases/23.05.4/packages/{arch_packages}/luci/"
     url_base = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/base/"
     url_packages = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/packages/"
     url_immortalwrt = f"https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/{platform}/packages/"
 
     # 请求kiddin9目录
-    response = requests.get(url_kiddin9)
+    response = requests.get(url_ustc)
     soup = BeautifulSoup(response.text, 'html.parser')
     links = [a['href'] for a in soup.find_all('a', href=True) if a['href'].endswith('.ipk')]
 
@@ -103,13 +104,13 @@ os.makedirs('packages', exist_ok=True)
 # 下载文件
 for package_name in found_packages:
     # 构建URL
-    url_kiddin9 = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/kiddin9/"
+    url_ustc = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/kiddin9/"
     url_base = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/base/"
     url_packages = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/packages/"
     url_immortalwrt = f"https://immortalwrt.kyarucloud.moe/releases/23.05.4/targets/{platform}/packages/"
 
     # 请求kiddin9目录
-    response = requests.get(url_kiddin9)
+    response = requests.get(url_ustc)
     soup = BeautifulSoup(response.text, 'html.parser')
     links = [a['href'] for a in soup.find_all('a', href=True) if a['href'].endswith('.ipk')]
 
@@ -117,7 +118,7 @@ for package_name in found_packages:
     found = False
     for link in links:
         if link.startswith(package_name + '_'):
-            download_url = url_kiddin9 + link
+            download_url = url_ustc + link
             found = True
             break
 
@@ -174,6 +175,6 @@ def append_repository_url(file_path, new_url):
 # 查找 repositories.conf 文件
 repositories_conf = find_repositories_conf()
 if repositories_conf:
-    append_repository_url(repositories_conf, 'url_kiddin9')
+    append_repository_url(repositories_conf, 'url_ustc')
 else:
     print("Warning: repositories.conf not found. Skipping repository URL addition.")
