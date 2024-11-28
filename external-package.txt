@@ -9,6 +9,7 @@ luci-app-upnp
 luci-app-vlmcsd
 luci-app-travelmate
 luci-app-adguardhome
+luci-app-passwall
 uboot-envtools
 v2dat
 kmod-nft-socket
