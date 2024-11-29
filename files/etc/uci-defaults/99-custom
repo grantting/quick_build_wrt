@@ -5,6 +5,17 @@ set luci.main.mediaurlbase='/luci-static/argon'
 
 set wizard.default.ipv6='0'
 
+set wireless.radio0.mu_beamformer='1'
+set wireless.radio1.mu_beamformer='1'
+
+set wireless.radio0.cell_density='3'
+set wireless.radio1.cell_density='3'
+
+set wireless.radio0.country='US'
+set wireless.radio1.country='US'
+
+uci set wireless.radio0.htmode='HE80'
+
 EOF
 
 root_password="root"
