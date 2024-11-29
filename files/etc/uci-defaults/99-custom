@@ -14,7 +14,7 @@ set wireless.radio1.cell_density='3'
 set wireless.radio0.country='US'
 set wireless.radio1.country='US'
 
-uci set wireless.radio0.htmode='HE80'
+uci set wireless.radio0.htmode='HE160'
 
 EOF
 
