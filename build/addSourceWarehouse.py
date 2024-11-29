@@ -21,9 +21,9 @@ print(f"Arch Packages: {arch_packages}")
 # 构建自定义仓库URL
 custom_repo_url = f"https://mirrors.ustc.edu.cn/immortalwrt/releases/23.05.4/packages/{arch_packages}/luci"
 
-kenzo_url = f"https://op.dllkids.xyz/packages/{arch_packages}/"
+kenzo_url = f"https://op.dllkids.xyz/packages/{arch_packages}"
 
-custom_repo_line = f"src/gz ustc_luci {custom_repo_url} \n src/gz  kenzo_url {kenzo_url}"
+custom_repo_line = f"src/gz ustc_luci {custom_repo_url} \n src/gz kenzo_url {kenzo_url}"
 
 # 定义 repositories.conf 文件路径
 repo_conf_path = "repositories.conf"  # 替换为实际的文件路径
