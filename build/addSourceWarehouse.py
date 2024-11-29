@@ -20,7 +20,10 @@ print(f"Arch Packages: {arch_packages}")
 
 # 构建自定义仓库URL
 custom_repo_url = f"https://mirrors.ustc.edu.cn/immortalwrt/releases/23.05.4/packages/{arch_packages}/luci"
-custom_repo_line = f"src/gz ustc_luci {custom_repo_url}"
+
+kiddin9_url = f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/kiddin9"
+
+custom_repo_line = f"src/gz ustc_luci {custom_repo_url} \n src/gz  kiddin9_url {kiddin9_url}"
 
 # 定义 repositories.conf 文件路径
 repo_conf_path = "repositories.conf"  # 替换为实际的文件路径
