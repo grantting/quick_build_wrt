@@ -21,6 +21,8 @@ set wireless.default_radio1.ieee80211r='1'
 set wireless.radio0.channel='149'
 
 set upnpd.config.enabled='1'
+
+set system.@system[0].hostname='MyWrt'
 EOF
 
 root_password="root"

@@ -7,3 +7,4 @@ luci-i18n-argon-config-zh-cn
 luci-app-openclash
 luci-app-wizard
 luci-app-easymesh
+luci-i18n-firewall-zh-cn
