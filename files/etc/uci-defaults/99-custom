@@ -26,6 +26,9 @@ EOF
 # UPnP 设置
 uci -q set upnpd.config.enabled='1'
 
+# 设置主机名
+uci -q set system.@system[0].hostname='MyWrt'
+
 # 应用所有更改
 uci commit
 
