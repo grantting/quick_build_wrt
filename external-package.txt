@@ -6,5 +6,4 @@ luci-i18n-upnp-zh-cn
 luci-i18n-argon-config-zh-cn
 luci-app-openclash
 luci-app-wizard
-luci-i18n-easymesh-zh-cn
 luci-app-easymesh
