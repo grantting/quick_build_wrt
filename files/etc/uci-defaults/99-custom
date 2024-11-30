@@ -1,41 +1,31 @@
 #!/bin/bash
 
-# 网络配置
 uci -q batch <<- 'EOF'
+
 set network.lan.ipaddr='10.0.0.1'
 set luci.main.mediaurlbase='/luci-static/argon'
+
 set wizard.default.ipv6='0'
-EOF
 
-# 无线配置
-COUNTRY_CODE="US"
-HTMODE_SETTING="HE160"
-IEEE80211R_ENABLED="1"
-
-uci -q batch <<- 'EOF'
 set wireless.radio0.mu_beamformer='1'
 set wireless.radio1.mu_beamformer='1'
-set wireless.radio0.country='${COUNTRY_CODE}'
-set wireless.radio1.country='${COUNTRY_CODE}'
-set wireless.radio0.htmode='${HTMODE_SETTING}'
-set wireless.default_radio0.ieee80211r='${IEEE80211R_ENABLED}'
-set wireless.default_radio1.ieee80211r='${IEEE80211R_ENABLED}'
+
+set wireless.radio0.country='US'
+set wireless.radio1.country='US'
+
+set wireless.radio0.htmode='HE160'
+
+set wireless.default_radio0.ieee80211r='1'
+set wireless.default_radio1.ieee80211r='1'
+
 set wireless.radio0.channel='149'
+
+set upnpd.config.enabled='1'
 EOF
 
-# UPnP 设置
-uci -q set upnpd.config.enabled='1'
-
-# 设置主机名
-uci -q set system.@system[0].hostname='MyWrt'
-
-# 应用所有更改
-uci commit
-
-# 设置root密码
 root_password="root"
 if [ -n "$root_password" ]; then
-  echo "root:$root_password" | chpasswd
+  (echo "$root_password"; sleep 1; echo "$root_password") | passwd > /dev/null
 fi
 
 echo "All configurations applied successfully!"
