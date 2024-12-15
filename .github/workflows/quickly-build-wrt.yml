@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VENDOR: immortalwrt
+      VENDOR: openwrt
       VERSION: ${{ github.event.inputs.firmware_version }}
       DATE: ''
       DATETIME: ''

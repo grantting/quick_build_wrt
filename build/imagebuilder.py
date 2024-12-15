@@ -1,7 +1,5 @@
 import os
-import subprocess
 import sys
-import urllib.parse
 import requests
 from tqdm import tqdm
 import tarfile
@@ -9,7 +7,7 @@ import tarfile
 def build_image_download_url(firmware_version, target):
     # 将 target 中的 '/' 替换为 '-'
     target_modified = target.replace('/', '-')
-    url = f"https://downloads.immortalwrt.org/releases/{firmware_version}/targets/{target}/immortalwrt-imagebuilder-{firmware_version}-{target_modified}.Linux-x86_64.tar.xz"
+    url = f"https://downloads.openwrt.org/releases/{firmware_version}/targets/{target}/openwrt-imagebuilder-{firmware_version}-{target_modified}.Linux-x86_64.tar.xz"
     return url
 
 def download_file_with_progress(url):

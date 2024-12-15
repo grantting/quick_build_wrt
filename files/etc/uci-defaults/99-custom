@@ -22,7 +22,7 @@ set wireless.radio0.channel='149'
 
 set upnpd.config.enabled='1'
 
-set system.@system[0].hostname='MyWrt'
+set system.@system[0].hostname='OpenWRT'
 EOF
 
 root_password="root"
