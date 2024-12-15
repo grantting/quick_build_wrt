@@ -19,7 +19,7 @@ else:
 print(f"Arch Packages: {arch_packages}")
 
 # 构建自定义仓库URL
-custom_repo_url = f"https://mirrors.ustc.edu.cn/immortalwrt/releases/23.05.4/packages/{arch_packages}/luci"
+custom_repo_url = f"https://mirrors.ustc.edu.cn/openwrt/releases/23.05.4/packages/{arch_packages}/luci"
 
 kenzo_url = f"https://op.dllkids.xyz/packages/{arch_packages}"
 
