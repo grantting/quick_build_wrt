@@ -6,9 +6,10 @@ on:
       firmware_version:
         description: 'Firmware Version'
         required: true
-        default: '23.05.4'
+        default: '23.05.5'
         type: choice
         options:
+          - 23.05.5
           - 23.05.4
           - 23.05.3
           - 23.05.2
