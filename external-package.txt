@@ -8,7 +8,9 @@ luci-app-openclash
 luci-app-wizard
 luci-app-easymesh
 luci-i18n-firewall-zh-cn
-dnsmasq-full
+-dnsmasq
 luci-app-passwall
 luci-app-vlmcsd
 luci-app-argon-config
+luci-theme-argon
+vlmcsd
