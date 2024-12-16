@@ -8,3 +8,4 @@ luci-app-openclash
 luci-app-wizard
 luci-app-easymesh
 luci-i18n-firewall-zh-cn
+dnsmasq-full
