@@ -24,7 +24,8 @@ if not platform:
 # 源仓库URL列表
 source_urls = [
     f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/kiddin9/Packages.gz",
-    f"https://downloads.immortalwrt.org/releases/23.05.4/targets/{platform}/packages/Packages.gz"
+    # f"https://downloads.immortalwrt.org/releases/23.05.4/targets/{platform}/packages/Packages.gz"
+    f"https://mirror-03.infra.openwrt.org/releases/23.05.5/packages/{arch_packages}/luci/Packages.gz"
 ]
 
 # 创建目录来存放下载和解压的文件
