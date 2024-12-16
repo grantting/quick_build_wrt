@@ -16,10 +16,15 @@ else:
 
 print(f"架构包: {arch_packages}")
 
+# 读取环境变量 PLATFORM
+platform = os.getenv('PLATFORM', 'ipq807x/generic')
+if not platform:
+    raise ValueError("Environment variable PLATFORM is not set")
+
 # 源仓库URL列表
 source_urls = [
     f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/kiddin9/Packages.gz",
-    f"https://downloads.immortalwrt.org/releases/23.05.4/targets/{arch_packages}/packages/Packages.gz"
+    f"https://downloads.immortalwrt.org/releases/23.05.4/targets/{platform}/packages/Packages.gz"
 ]
 
 # 创建目录来存放下载和解压的文件
