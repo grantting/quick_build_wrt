@@ -13,3 +13,14 @@ luci-app-vlmcsd
 luci-app-argon-config
 luci-theme-argon
 vlmcsd
+chinadns-ng
+dns2socks
+dns2tcp
+tcping
+ipt2socks
+shadowsocks-rust-sslocal
+shadowsocksr-libev-ssr-local
+shadowsocksr-libev-ssr-redir
+simple-obfs
+trojan-plus
+v2ray-plugin
