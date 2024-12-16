@@ -79,7 +79,7 @@ def find_package_filename(package_name, packages_file):
         content = file.read()
         packages = content.split('\n\n')  # 分割成多个Package条目
         for package in packages:
-            if f"Package: {package_name}" in package:
+            if re.search(rf"Package: {re.escape(package_name)}$", package, re.MULTILINE):
                 lines = package.split('\n')
                 for line in lines:
                     if line.startswith("Filename: "):
