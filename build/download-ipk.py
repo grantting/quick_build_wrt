@@ -25,6 +25,7 @@ if not platform:
 source_urls = [
     f"https://dl.openwrt.ai/releases/24.10/packages/{arch_packages}/kiddin9/Packages.gz",
     f"https://downloads.immortalwrt.org/releases/23.05.4/packages/{arch_packages}/luci/Packages.gz"
+    f"https://downloads.immortalwrt.org/releases/23.05.4/packages/{arch_packages}/base/Packages.gz"
     # f"https://mirror-03.infra.openwrt.org/releases/23.05.5/packages/{arch_packages}/luci/Packages.gz"
 ]
 
