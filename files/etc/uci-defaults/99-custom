@@ -31,7 +31,14 @@ set passwall.SocksNOD.type='Socks'
 set passwall.SocksNOD.address='127.0.0.1'
 set passwall.SocksNOD.port='1081'
 
-set passwall.global.tcp_node = 'SocksNOD'
+set passwall.global.tcp_node='SocksNOD'
+
+set passwall.SocksOPN=socks
+set passwall.SocksOPN.enabled='1'
+set passwall.SocksOPN.port='1081'
+set passwall.SocksOPN.http_port='0'
+
+set passwall.global.socks_enabled='1'
 EOF
 
 root_password="root"
