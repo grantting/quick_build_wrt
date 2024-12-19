@@ -24,30 +24,12 @@ set upnpd.config.enabled='1'
 
 set system.@system[0].hostname='OpenWRT'
 
-# 添加新的节点配置并指定ID
-set passwall.@nodes[-1]=nodes
-set passwall.@nodes[-1].id='SocksNOD'
-
-# 设置该节点的各项参数
-set passwall.@nodes[-1].remarks='自动切换'
-set passwall.@nodes[-1].type='Socks'
-set passwall.@nodes[-1].address='127.0.0.1'
-set passwall.@nodes[-1].port='1081'
-
-# 添加新的Socks配置并指定ID
-set passwall.@socks[-1]=socks
-set passwall.@socks[-1].id='SocksOPN'
-
-# 设置该Socks配置的各项参数
-set passwall.@socks[-1].enabled='1'
-set passwall.@socks[-1].port='1081'
-set passwall.@socks[-1].http_port='0'
-set passwall.@socks[-1].log='1'
-set passwall.@socks[-1].enable_autoswitch='1'
-set passwall.@socks[-1].autoswitch_testing_time='30'
-set passwall.@socks[-1].autoswitch_connect_timeout='3'
-set passwall.@socks[-1].autoswitch_retry_num='1'
-set passwall.@socks[-1].autoswitch_probe_url='https://www.google.com/generate_204'
+# 添加新的节点配置并指定ID 设置该节点的各项参数
+set passwall.SocksNOD=nodes
+set passwall.SocksNOD.remarks='自动切换'
+set passwall.SocksNOD.type='Socks'
+set passwall.SocksNOD.address='127.0.0.1'
+set passwall.SocksNOD.port='1081'
 
 set passwall.global.tcp_node = 'SocksNOD'
 EOF
