@@ -24,21 +24,20 @@ set upnpd.config.enabled='1'
 
 set system.@system[0].hostname='OpenWRT'
 
-# 添加新的节点配置并指定ID 设置该节点的各项参数
-set passwall.SocksN0D=nodes
-set passwall.SocksN0D.remarks='自动切换'
-set passwall.SocksN0D.type='Socks'
-set passwall.SocksN0D.address='127.0.0.1'
-set passwall.SocksN0D.port='1081'
+set passwall.AVVjwzzU=nodes
+set passwall.AVVjwzzU.remarks='自动切换'
+set passwall.AVVjwzzU.type='Socks'
+set passwall.AVVjwzzU.address='127.0.0.1'
+set passwall.AVVjwzzU.port='1081'
 
-set passwall.global.tcp_node='SocksN0D'
+set passwall.@global[0].tcp_node='AVVjwzzU'
 
-set passwall.Socks0PN=socks
-set passwall.Socks0PN.enabled='1'
-set passwall.Socks0PN.port='1081'
-set passwall.Socks0PN.http_port='0'
+set passwall.oFIfqfES=socks
+set passwall.oFIfqfES.enabled='1'
+set passwall.oFIfqfES.port='1081'
+set passwall.oFIfqfES.http_port='0'
+set passwall.oFIfqfES.enable_autoswitch='1'
 
-set passwall.global.socks_enabled='1'
 EOF
 
 root_password="root"
