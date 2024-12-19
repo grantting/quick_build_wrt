@@ -49,6 +49,7 @@ set passwall.@socks[-1].autoswitch_connect_timeout='3'
 set passwall.@socks[-1].autoswitch_retry_num='1'
 set passwall.@socks[-1].autoswitch_probe_url='https://www.google.com/generate_204'
 
+set passwall.global.tcp_node = 'SocksNOD'
 EOF
 
 root_password="root"
