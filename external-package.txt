@@ -4,14 +4,10 @@ luci-i18n-vlmcsd-zh-cn
 luci-i18n-ttyd-zh-cn
 luci-i18n-upnp-zh-cn
 luci-i18n-argon-config-zh-cn
-luci-app-openclash
+luci-i18n-adbyby-plus-zh-cn
+luci-i18n-firewall-zh-cn
 luci-app-wizard
 luci-app-easymesh
-luci-i18n-firewall-zh-cn
 luci-app-partexp
 luci-app-diskman
 luci-app-syscontrol
-luci-app-my-dnshelper
-luci-app-adbyby-plus
-luci-app-eqosplus
-my-dnshelper
