@@ -9,10 +9,8 @@ on:
         default: '23.05.4'
         type: choice
         options:
+          - 24.10.0
           - 23.05.4
-          - 23.05.3
-          - 23.05.2
-          - 23.05.1
       model_parameter:
         description: 'Parameters (visit readme)'
         required: true
