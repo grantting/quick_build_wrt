@@ -10,3 +10,4 @@ luci-app-easymesh
 luci-app-partexp
 luci-app-diskman
 luci-app-syscontrol
+luci-app-openclash
